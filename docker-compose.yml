@@ -1,52 +1,31 @@
 version: '3.9'
 services:
-  frontend:
-    container_name: psel_frontend
-    build: ./psel-fe
-    ports:
-      - 3000:3000
-    working_dir: /psel-frontend
-    # Os `healthcheck` devem garantir que a aplicação
-    # está operacional, antes de liberar o container
-    healthcheck:
-      test: [ "CMD", "lsof", "-t", "-i:3000" ]
-      timeout: 10s
-      retries: 5
-  backend:
-    container_name: psel_backend
-    build: ./psel-be
-    ports:
-      - 3001:3001
+  psel-be:
+    image: node:16.14-alpine
+    container_name: psel-be
     working_dir: /psel-backend
-    # Caso queira que o container esteja atualizado durante o desenvolvimento, sem que você precise ficar fazendo down e up dos containers, descomente as 3 linhas abaixo
-    command: dev
     volumes:
-      - ./psel-be/src:/psel-backend/src
-    depends_on:
-      db:
-        condition: service_healthy
+      - ./psel-be:/psel-backend
+    ports:
+      - "3000:3000"
     environment:
-      - APP_PORT=3001
+      - APP_PORT=3000 # Porta da aplicação Nest.js
       - JWT_SECRET=jwt_secret
-      # Os dados abaixo se referem ao container `db`
-      # Dica: Relembre aqui da comunicação interna entre containers
       - DB_USER=root
       - DB_PASS=123456
       - DB_HOST=db
-      - DB_PORT=3306
-    healthcheck:
-      test: [ "CMD", "lsof", "-t", "-i:3001" ]
-      timeout: 10s
-      retries: 5
+      - DB_PORT=5432
+    command: ["npm", "start"]
+
   db:
-    image: postgres:13 # Use the PostgreSQL image
-    container_name: db
+    image: postgres:13
+    container_name: dbP
     ports:
-      - 5432:5432 # Map the PostgreSQL port
+      - "5432:5432"
     environment:
-      - POSTGRES_PASSWORD=123456 # Set the PostgreSQL password
+      - POSTGRES_PASSWORD=123456
     restart: 'always'
     healthcheck:
-      test: [ "CMD", "pg_isready", "-h", "localhost", "-U", "postgres" ] # Adjust the healthcheck for PostgreSQL
+      test: [ "CMD", "pg_isready", "-h", "localhost", "-U", "postgres" ]
       timeout: 10s
       retries: 5
