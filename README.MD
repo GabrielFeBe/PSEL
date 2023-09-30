@@ -14,15 +14,12 @@ Siga as etapas abaixo para iniciar o projeto.
 
 Clone este repositório para o seu ambiente de desenvolvimento:
 
-```bash
-git clone git@github.com:GabrielFeBe/PSEL.git
-2. Navegue até o Diretório Raiz
+git clone git@github.com:GabrielFeBe/PSEL.git 2. Navegue até o Diretório Raiz
 Navegue até o diretório raiz do projeto:
 
 bash
 Copy code
-cd PSEL
-3. Inicie os Contêineres
+cd PSEL 3. Inicie os Contêineres
 Execute o seguinte comando para iniciar os contêineres para o backend e o frontend:
 
 bash
@@ -31,7 +28,7 @@ docker-compose up --build
 Isso construirá as imagens Docker e iniciará os contêineres para o backend e o frontend.
 
 4. Acesse a Aplicação
-Após a conclusão bem-sucedida, você pode acessar a aplicação Vue.js no seu navegador em:
+   Após a conclusão bem-sucedida, você pode acessar a aplicação Vue.js no seu navegador em:
 
 arduino
 Copy code
@@ -58,5 +55,3 @@ Se você deseja contribuir para este projeto, fique à vontade para fazer um for
 
 Licença
 Este projeto está licenciado sob a licença MIT - consulte o arquivo LICENSE para obter detalhes.
-
-```
