@@ -34,15 +34,14 @@ Isso construirá as imagens Docker e iniciará os contêineres para o backend e 
    Após a conclusão bem-sucedida, você pode acessar a aplicação Vue.js no seu navegador em:
 
 http://localhost:8080
-Iniciando o Container do Frontend Manualmente (Obrigatorio)
-Se preferir iniciar o container do frontend manualmente, siga estas etapas:
+
+5. Iniciando o Container do Frontend Manualmente (Obrigatorio)
 
 Navegue até o diretório do frontend:
-bash
-Copy code
+
 cd psel-fe
+
 Execute o comando Docker Build para criar a imagem do frontend:
-bash
 
 ```bash
 docker build -t vuejs-cookbook/dockerize-vuejs-app .
