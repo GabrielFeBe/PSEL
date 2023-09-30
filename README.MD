@@ -10,7 +10,7 @@ Antes de começar, certifique-se de ter o Docker e o Docker Compose instalados e
 
 Siga as etapas abaixo para iniciar o projeto.
 
-### 1. Clone o Repositório
+1.  Clone o Repositório
 
 Clone este repositório para o seu ambiente de desenvolvimento:
 
