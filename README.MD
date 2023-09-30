@@ -13,7 +13,10 @@ Siga as etapas abaixo para iniciar o projeto.
 1.  Clone o Repositório
 
 - Clone este repositório para o seu ambiente de desenvolvimento:
+
+```bash
   git clone git@github.com:GabrielFeBe/PSEL.git
+```
 
 2. Navegue até o Diretório Raiz
 
