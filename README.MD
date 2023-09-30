@@ -14,12 +14,15 @@ Siga as etapas abaixo para iniciar o projeto.
 
 Clone este repositório para o seu ambiente de desenvolvimento:
 
-git clone git@github.com:GabrielFeBe/PSEL.git 2. Navegue até o Diretório Raiz
-Navegue até o diretório raiz do projeto:
+git clone git@github.com:GabrielFeBe/PSEL.git
 
-bash
-Copy code
-cd PSEL 3. Inicie os Contêineres
+2. Navegue até o Diretório Raiz
+   Navegue até o diretório raiz do projeto:
+
+cd PSEL
+
+3. Inicie os Contêineres
+
 Execute o seguinte comando para iniciar os contêineres para o backend e o frontend:
 
 bash
@@ -30,8 +33,6 @@ Isso construirá as imagens Docker e iniciará os contêineres para o backend e 
 4. Acesse a Aplicação
    Após a conclusão bem-sucedida, você pode acessar a aplicação Vue.js no seu navegador em:
 
-arduino
-Copy code
 http://localhost:8080
 Iniciando o Container do Frontend Manualmente (Obrigatorio)
 Se preferir iniciar o container do frontend manualmente, siga estas etapas:
@@ -42,16 +43,18 @@ Copy code
 cd psel-fe
 Execute o comando Docker Build para criar a imagem do frontend:
 bash
-Copy code
+
+```bash
 docker build -t vuejs-cookbook/dockerize-vuejs-app .
+```
+
 Inicie o container do frontend:
-bash
-Copy code
+
+```bash
 docker run -it -p 8080:8080 --rm --name dockerize-vuejs-app-1 vuejs-cookbook/dockerize-vuejs-app
+```
+
 Isso iniciará o container do frontend Vue.js.
 
-Contribuindo
-Se você deseja contribuir para este projeto, fique à vontade para fazer um fork e criar um pull request com suas alterações.
-
 Licença
-Este projeto está licenciado sob a licença MIT - consulte o arquivo LICENSE para obter detalhes.
+Este projeto está licenciado sob a licença MIT - consulte o arquivo <a href=''>LICENSE<a> para obter detalhes.
