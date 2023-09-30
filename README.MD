@@ -36,7 +36,7 @@ Após a conclusão bem-sucedida, você pode acessar a aplicação Vue.js no seu 
 arduino
 Copy code
 http://localhost:8080
-Iniciando o Container do Frontend Manualmente (Opcional)
+Iniciando o Container do Frontend Manualmente (Obrigatorio)
 Se preferir iniciar o container do frontend manualmente, siga estas etapas:
 
 Navegue até o diretório do frontend:
