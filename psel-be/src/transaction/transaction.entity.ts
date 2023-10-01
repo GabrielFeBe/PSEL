@@ -9,7 +9,7 @@ export class Transaction {
   @Column()
   accountId: number;
 
-  @Column()
+  @Column({ default: new Date() })
   date: Date;
 
   @Column()
