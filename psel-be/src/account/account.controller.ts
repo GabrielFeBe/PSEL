@@ -1,8 +1,11 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UsePipes } from '@nestjs/common';
 import { AccountsService } from './account.service';
 import { Account } from './account.entity';
+import { AccountDto } from './account.validator';
+import { ValidationPipe } from '@nestjs/common';
 
-@Controller()
+@Controller('accounts')
+@UsePipes(new ValidationPipe())
 export class AccountsController {
   constructor(private readonly appService: AccountsService) {}
 
@@ -12,8 +15,8 @@ export class AccountsController {
     return response;
   }
   // creating a new account;
-  @Post('create')
-  async criarExemplo(@Body() requestBody: any) {
+  @Post()
+  async criarExemplo(@Body() requestBody: AccountDto) {
     // 'requestBody' agora contém os dados do corpo da solicitação
     // Faça o processamento necessário com os dados aqui
     console.log(requestBody);
