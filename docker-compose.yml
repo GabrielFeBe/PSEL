@@ -13,7 +13,7 @@ services:
       - JWT_SECRET=jwt_secret
       - DB_USER=root
       - DB_PASS=123456
-      - DB_HOST=db
+      - DB_HOST=dbP
       - DB_PORT=5432
     command: ["npm", "start"]
 
@@ -23,7 +23,7 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_PASSWORD=123456
+      - POSTGRES_PASSWORD=102030
     restart: 'always'
     healthcheck:
       test: [ "CMD", "pg_isready", "-h", "localhost", "-U", "postgres" ]
