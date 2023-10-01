@@ -1,29 +1,36 @@
 import {
   IsBoolean,
+  IsEmail,
   IsInt,
   IsNotEmpty,
   IsOptional,
-  IsString,
+  Validate,
 } from 'class-validator';
+import { IsCpfValidConstraint } from './cpf.validator';
+import { IsCnpjValidConstraint } from './cnpj.validator';
 
 export class AccountDto {
-  @IsNotEmpty({ message: 'O campo id é obrigatório' })
+  @IsOptional()
   @IsInt({ message: 'O campo id deve ser um número inteiro' })
   id: number;
 
   @IsOptional()
-  @IsInt({ message: 'O campo cpf deve ser um número inteiro' })
-  cpf?: number; // Note que alteramos para campo opcional
+  @Validate(IsCpfValidConstraint, {
+    message: 'CPF inválido',
+  })
+  cpf?: string; // Note que alteramos para campo opcional
 
   @IsOptional()
-  @IsInt({ message: 'O campo cnpj deve ser um número inteiro' })
-  cnpj?: number; // Também alterado para opcional
+  @Validate(IsCnpjValidConstraint, {
+    message: 'CNPJ inválido',
+  })
+  cnpj?: string; // Também alterado para opcional
 
-  @IsNotEmpty()
-  @IsString()
+  @IsNotEmpty({ message: 'O campo email é obrigatório' })
+  @IsEmail()
   email: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsBoolean()
   isActive: boolean;
 }

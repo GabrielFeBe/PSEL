@@ -7,10 +7,10 @@ export class Account {
   id: number;
 
   @Column({ nullable: true })
-  cpf: number;
+  cpf: string;
 
   @Column({ nullable: true })
-  cnpj: number;
+  cnpj: string;
 
   @Column()
   email: string;
