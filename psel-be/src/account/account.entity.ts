@@ -18,6 +18,9 @@ export class Account {
   @Column({ default: true })
   isActive: boolean;
 
+  @Column()
+  password: string;
+
   @OneToMany(() => Transaction, (transaction) => transaction.account)
   transactions: Transaction[];
 }

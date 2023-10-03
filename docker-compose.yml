@@ -11,8 +11,8 @@ services:
     environment:
       - APP_PORT=3000 # Porta da aplicação Nest.js
       - JWT_SECRET=jwt_secret
-      - DB_USER=root
-      - DB_PASS=123456
+      - DB_USER=postgres
+      - DB_PASS=102030
       - DB_HOST=dbP
       - DB_PORT=5432
     command: ["npm", "start"]

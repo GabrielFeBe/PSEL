@@ -4,6 +4,7 @@ import {
   IsInt,
   IsNotEmpty,
   IsOptional,
+  IsString,
   Validate,
 } from 'class-validator';
 import { IsCpfValidConstraint } from './cpf.validator';
@@ -33,4 +34,8 @@ export class AccountDto {
   @IsOptional()
   @IsBoolean()
   isActive: boolean;
+
+  @IsNotEmpty()
+  @IsString()
+  password: string;
 }

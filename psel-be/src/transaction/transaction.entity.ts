@@ -10,13 +10,13 @@ export class Transaction {
   accountId: number;
 
   @Column({ default: new Date() })
-  date: Date;
+  date?: Date;
 
   @Column()
   value: number;
 
-  @Column()
-  cashback: number;
+  @Column({ nullable: true })
+  cashback?: number;
 
   @OneToMany(() => Account, (account) => account.transactions)
   account: Account;
