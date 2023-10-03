@@ -5,6 +5,7 @@ import {
   Param,
   Patch,
   Post,
+  Request,
   UsePipes,
 } from '@nestjs/common';
 import { TransactionsService } from './transaction.service';
@@ -17,21 +18,24 @@ import { CashbackDTO } from './cashback.validator';
 @UsePipes(new ValidationPipe())
 export class TransactionsController {
   constructor(private readonly appService: TransactionsService) {}
-  // this is only an mock for now, i'll get the id by the authotization header, but for now i'll just pass the id as a param;
-  @Get(':id')
-  async getTransactions(
-    @Param() { id }: { id: string },
-  ): Promise<Transaction[]> {
-    const response = await this.appService.findAll(+id);
+  // getting all the transactions from the user, the userId is achieved by the token in the request;
+  @Get()
+  async getTransactions(@Request() req): Promise<Transaction[]> {
+    //Here we get the id from the token if the token is valid;
+    const { sub: idR } = req.user;
+    // then we look for the transactions with the id;
+    const response = await this.appService.findAll(+idR);
+    // and return the response;
     return response;
   }
   // creating a new account;
   @Post()
   async creatingTransaction(@Body() requestBody: TransactionsDTO) {
     // Dto to make sure the request body is correct;
-    console.log(requestBody);
-    return 'Exemplo criado com sucesso';
+    const response = await this.appService.create(requestBody);
+    return response;
   }
+  // adding cashback to a transaction;
   @Patch(':id')
   async addingCashback(
     @Param() { id }: { id: string },
@@ -40,6 +44,7 @@ export class TransactionsController {
     // Dto to make sure the request body is correct;
     //This is the same as const id = req.params.id;
     await this.appService.addingCashback(+id, requestBody);
+    // the return is just to show that the cashback was added if it's successful;
     return 'Cahsback added sucessfully';
   }
 }

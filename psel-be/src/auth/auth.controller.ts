@@ -6,7 +6,7 @@ import { Public } from 'src/utils/public';
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
-
+  //  here we login the email and password, and return the token that's valid for 10days;
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('login')

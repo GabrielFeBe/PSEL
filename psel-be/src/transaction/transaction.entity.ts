@@ -12,7 +12,7 @@ export class Transaction {
   @Column({ default: new Date() })
   date?: Date;
 
-  @Column()
+  @Column({ type: 'decimal', precision: 5, scale: 2 })
   value: number;
 
   @Column({ nullable: true })

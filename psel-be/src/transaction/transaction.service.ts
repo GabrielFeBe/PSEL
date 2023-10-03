@@ -28,13 +28,15 @@ export class TransactionsService {
   async remove(id: number): Promise<void> {
     await this.TransactionsRepository.delete(id);
   }
-  async create(transaction: ITransaction): Promise<ITransaction> {
+
+  async create(transaction: Partial<ITransaction>): Promise<ITransaction> {
     const account = await this.accountsService.findOne(transaction.accountId);
     if (!account.isActive) {
       throw new BadRequestException('Account has been deleted');
     }
     return await this.TransactionsRepository.save(transaction);
   }
+
   async addingCashback(
     id: number,
     { cashback }: { cashback: number },

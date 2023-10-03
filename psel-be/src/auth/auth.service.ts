@@ -8,7 +8,7 @@ export class AuthService {
     private usersService: AccountsService,
     private jwtService: JwtService,
   ) {}
-
+  // Auth service using JWT to sign the token;
   async signIn(username: string, pass: string): Promise<any> {
     const user = await this.usersService.findOneByUsername(username);
     if (user?.password !== pass) {
