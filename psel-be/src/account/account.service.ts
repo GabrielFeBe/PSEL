@@ -21,6 +21,11 @@ export class AccountsService {
     });
   }
 
+  // this will be user to get the account by the email, to check if the user exists, in the auth.service.ts;
+  findOneByUsername(email: string): Promise<Account | null> {
+    return this.AccountsRepository.findOneBy({ email });
+  }
+
   findOne(id: number): Promise<Account | null> {
     // This is as usual findOne method, but we are using the repository to get the data;
     return this.AccountsRepository.findOneBy({ id });
