@@ -19,10 +19,11 @@ const updateCpf = (event: Event) => {
 </script>
 
 <template>
-  <div>
-    <input type="text" id="cpfOrCnpj" :value="cpf" @input="updateCpf($event)" />
+  <label for="cpf">
+    Cpf
+    <input type="text" id="cpf" :value="cpf" @input="updateCpf($event)" />
     <span v-if="cpf.length > 0 && !isCPFValid">CPF inválido</span>
-  </div>
+  </label>
 </template>
 
 <style scoped></style>

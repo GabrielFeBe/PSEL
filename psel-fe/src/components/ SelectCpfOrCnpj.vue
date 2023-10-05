@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import CpfInput from './CpfInput.vue'
+import CnpjInputVue from './CnpjInput.vue'
 const value = ref('cpf')
 
 const updateValue = (event: Event) => {
@@ -11,18 +12,20 @@ const updateValue = (event: Event) => {
 </script>
 
 <template>
-  <div>
+  <form>
     <select :value="value" @input="updateValue($event)">
       <option value="cpf">CPF</option>
       <option value="cnpj">CNPJ</option>
     </select>
-    <label for="cpfOrCnpj">
-      {{ value }}<br />
-      <div v-if="value === 'cpf'">
-        <CpfInput />
-      </div>
-    </label>
-  </div>
+
+    <div v-if="value === 'cpf'">
+      <CpfInput />
+    </div>
+    <div v-else>
+      <CnpjInputVue />
+    </div>
+    <button></button>
+  </form>
 </template>
 
 <style scoped></style>
