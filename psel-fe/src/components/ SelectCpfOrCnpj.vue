@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
 import CpfInput from './CpfInput.vue'
 import CnpjInputVue from './CnpjInput.vue'
@@ -12,20 +13,20 @@ const updateValue = (event: Event) => {
 </script>
 
 <template>
-  <form>
-    <select :value="value" @input="updateValue($event)">
-      <option value="cpf">CPF</option>
-      <option value="cnpj">CNPJ</option>
-    </select>
+  <select :value="value" @input="updateValue($event)">
+    <option value="cpf">CPF</option>
+    <option value="cnpj">CNPJ</option>
+  </select>
 
-    <div v-if="value === 'cpf'">
-      <CpfInput />
-    </div>
-    <div v-else>
-      <CnpjInputVue />
-    </div>
-    <button></button>
-  </form>
+  <div v-if="value === 'cpf'">
+    <CpfInput />
+  </div>
+  <div v-else>
+    <CnpjInputVue />
+  </div>
+  <!-- <RouterLink to="/"> -->
+  <button type="submit">Enviar</button>
+  <!-- </RouterLink> -->
 </template>
 
 <style scoped></style>

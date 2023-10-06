@@ -21,7 +21,7 @@ const updateCpf = (event: Event) => {
 <template>
   <label for="cpf">
     Cpf
-    <input type="text" id="cpf" :value="cpf" @input="updateCpf($event)" />
+    <input type="text" id="cpf" name="cpf" :value="cpf" @input="updateCpf($event)" />
     <span v-if="cpf.length > 0 && !isCPFValid">CPF inválido</span>
   </label>
 </template>
