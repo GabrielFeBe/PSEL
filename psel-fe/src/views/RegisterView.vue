@@ -58,12 +58,6 @@ async function submitForm(event: Event): Promise<void> {
 
 <style scoped>
 @media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-
   div {
     display: flex;
     flex-direction: column;

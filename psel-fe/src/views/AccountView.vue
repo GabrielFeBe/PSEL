@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { getToken } from '../utils/GetCookies'
 import { useFetch } from '../utils/fetch'
-import Cookies from 'js-cookie'
 const url = ref('https://jsonplaceholder.typicode.com/posts')
-const token = Cookies.get('token')
-const { data, error } = useFetch(url, token as string)
-console.log(error)
+const { data, error } = useFetch(url, getToken() as string)
 </script>
 <template>
   <main>
@@ -18,6 +16,17 @@ console.log(error)
       <pre>{{ data }}</pre>
     </div>
     <div v-else>Loading...</div>
+    <button class="warning">Delete</button>
   </main>
 </template>
-<style scoped></style>
+<style scoped>
+.warning {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+</style>
