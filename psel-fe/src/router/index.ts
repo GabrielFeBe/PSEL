@@ -8,17 +8,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/HomeView.vue')
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: () => import('../views/AboutView.vue')
-    },
-    {
-      path: '/login',
-      name: 'login',
       component: () => import('../views/LoginView.vue')
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component:()=> import('../views/RegisterView.vue')
     },
     {
       path: '/account',
@@ -33,7 +28,7 @@ const router = createRouter({
   ]
 })
 // Validator similar to Middleware in Next.js;
-const allowedRoutes = ['login' , 'about', 'home']
+const allowedRoutes = ['register', 'home']
 router.beforeEach((to, from, next) => {
   const token = Cookies.get('token');
   if(token || allowedRoutes.includes(to.name as string)) {

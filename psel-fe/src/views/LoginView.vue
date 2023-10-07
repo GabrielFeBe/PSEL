@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import Cookies from 'js-cookie'
 
 const email = ref('')
@@ -51,17 +52,20 @@ async function loginForm(event: Event): Promise<void> {
 }
 </script>
 <template>
-  <form @submit="loginForm">
-    <label for="email">
-      Email<br />
-      <input type="email" name="email" id="email" :value="email" @input="updateEmail($event)" />
-    </label>
-    <label for="password">
-      Password<br />
-      <input type="password" id="password" name="password" @input="updatePassword($event)" />
-    </label>
-    <button type="submit">Entrar</button>
-  </form>
+  <main>
+    <form @submit="loginForm">
+      <label for="email">
+        Email<br />
+        <input type="email" name="email" id="email" :value="email" @input="updateEmail($event)" />
+      </label>
+      <label for="password">
+        Password<br />
+        <input type="password" id="password" name="password" @input="updatePassword($event)" />
+      </label>
+      <button type="submit">Entrar</button>
+    </form>
+    <RouterLink to="/register">Register here</RouterLink>
+  </main>
 </template>
 <style scoped>
 label {

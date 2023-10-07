@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import Cookies from 'js-cookie'
 import { ref } from 'vue'
+
+const token = Cookies.get('token')
 
 const count = ref(0)
 
@@ -21,12 +24,15 @@ function increment() {
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
 
-      <nav>
+      <nav v-if="token">
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/register">Register</RouterLink>
         <RouterLink to="/account">Account</RouterLink>
         <RouterLink to="/statement">BankStatement</RouterLink>
         <RouterLink to="/login">Login</RouterLink>
+      </nav>
+      <nav v-else>
+        <RouterLink to="/">Home</RouterLink>
       </nav>
     </div>
   </header>
