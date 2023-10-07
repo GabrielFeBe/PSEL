@@ -1,0 +1,72 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import Cookies from 'js-cookie'
+
+const email = ref('')
+const password = ref('')
+const error = ref('')
+const updateEmail = (event: Event) => {
+  if (event.target) {
+    email.value = (event.target as HTMLInputElement).value
+  }
+}
+const updatePassword = (event: Event) => {
+  if (event.target) {
+    password.value = (event.target as HTMLInputElement).value
+  }
+}
+
+async function loginForm(event: Event): Promise<void> {
+  event.preventDefault()
+
+  const form = event.target as HTMLFormElement
+  const formData = new FormData(form)
+
+  const email = formData.get('email') as string
+  const password = formData.get('password') as string
+
+  console.log('Email:', email)
+  console.log('Password:', password)
+  try {
+    const response = await fetch('mock-url.com', {
+      body: JSON.stringify({
+        email,
+        password
+      }),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    if (!response.ok) {
+      throw new Error(response.statusText)
+    }
+    const data = await response.json()
+    const expirationDate = new Date()
+    expirationDate.setTime(expirationDate.getTime() + 10 * 60 * 60 * 1000)
+    Cookies.set('token', data.token, { expires: expirationDate })
+  } catch (e: any) {
+    error.value = e.message as string
+  }
+}
+</script>
+<template>
+  <form @submit="loginForm">
+    <label for="email">
+      Email<br />
+      <input type="email" name="email" id="email" :value="email" @input="updateEmail($event)" />
+    </label>
+    <label for="password">
+      Password<br />
+      <input type="password" id="password" name="password" @input="updatePassword($event)" />
+    </label>
+    <button type="submit">Entrar</button>
+  </form>
+</template>
+<style scoped>
+label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+</style>

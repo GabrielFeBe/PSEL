@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
+// import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
 import CpfInput from './CpfInput.vue'
 import CnpjInputVue from './CnpjInput.vue'
