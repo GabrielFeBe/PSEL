@@ -40,10 +40,11 @@ export class AccountsController {
     return response;
   }
   // Deleting an account, but in this case we will just turn it inactive;
-  @Delete(':id')
-  async deleteAccount(@Param() { id }: { id: string }) {
-    //This is the same as const id = req.params.id;
-    await this.appService.remove(+id);
+  @Delete()
+  async deleteAccount(@Request() req) {
+    // i'm getting the id from the token wich i receive from the auth middleware after the user is authenticated;
+    const { sub: idR } = req.user;
+    await this.appService.remove(+idR);
     return 'Account deleted';
   }
   // Updating an account;

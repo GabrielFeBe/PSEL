@@ -1,15 +1,37 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onBeforeUnmount, ref, type Ref } from 'vue'
+import { useRouter } from 'vue-router'
+import Cookies from 'js-cookie'
+const router = useRouter()
 const deleteConfirmation = ref(false)
 import { getToken } from '../utils/GetCookies'
 import { useFetch } from '../utils/fetch'
 const url = ref('http://localhost:3000/accounts')
 const { data, error } = useFetch(url, getToken() as string)
-// const updateEmail = (event: Event) => {
-//   if (event.target) {
-//     data.value?.email = (event.target as HTMLInputElement).value
-//   }
-// }
+const updateError = ref<Ref | null>(null)
+const deleteAccount = () => {
+  useFetch(url, getToken() as string, 'DELETE')
+  Cookies.remove('token')
+  router.push('/')
+}
+let timeoutId: number | null | undefined = null
+const updatingAccount = () => {
+  const { error } = useFetch(url, getToken() as string, 'PATCH')
+  if (error) {
+    updateError.value = error
+    timeoutId = setTimeout(() => {
+      updateError.value = null
+    }, 3000)
+  } else {
+    window.location.reload()
+  }
+}
+onBeforeUnmount(() => {
+  if (timeoutId !== null) {
+    clearTimeout(timeoutId)
+  }
+})
+console.log(updateError)
 </script>
 <template>
   <main>
@@ -17,7 +39,7 @@ const { data, error } = useFetch(url, getToken() as string)
       <div class="confirmB">
         <p class="confirmT">Are you sure you want to delete your account?</p>
         <div class="buttonsBox">
-          <button class="warning">Yes</button>
+          <button class="warning" @click="deleteAccount">Yes</button>
           <button @click="deleteConfirmation = false" class="confirmButtonNot">No</button>
         </div>
       </div>
@@ -35,8 +57,9 @@ const { data, error } = useFetch(url, getToken() as string)
       <input v-else class="disabled" type="text" :value="data.cnpj" disabled="true" />
     </div>
     <div v-else>Loading...</div>
-    <button>Change</button>
+    <button @click="updatingAccount">Change</button>
     <button class="warning" @click="deleteConfirmation = true">Delete</button>
+    <div v-if="updateError?.value">{{ updateError.value.message }}</div>
   </main>
 </template>
 <style scoped>
