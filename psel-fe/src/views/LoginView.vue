@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useRouter } from 'vue-router'
 import Cookies from 'js-cookie'
-
+const router = useRouter()
 const email = ref('')
 const password = ref('')
 const error = ref('')
@@ -29,7 +30,7 @@ async function loginForm(event: Event): Promise<void> {
   console.log('Email:', email)
   console.log('Password:', password)
   try {
-    const response = await fetch('mock-url.com', {
+    const response = await fetch('http://localhost:3000/auth/login', {
       body: JSON.stringify({
         email,
         password
@@ -45,7 +46,8 @@ async function loginForm(event: Event): Promise<void> {
     const data = await response.json()
     const expirationDate = new Date()
     expirationDate.setTime(expirationDate.getTime() + 10 * 60 * 60 * 1000)
-    Cookies.set('token', data.token, { expires: expirationDate })
+    Cookies.set('token', data.access_token, { expires: expirationDate })
+    router.push('/account')
   } catch (e: any) {
     error.value = e.message as string
   }

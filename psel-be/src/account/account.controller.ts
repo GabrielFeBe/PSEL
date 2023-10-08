@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Request,
   UsePipes,
 } from '@nestjs/common';
 import { AccountsService } from './account.service';
@@ -21,10 +22,14 @@ export class AccountsController {
   constructor(private readonly appService: AccountsService) {}
 
   @Get()
-  async getAccounts(): Promise<Account[]> {
+  async getAccounts(@Request() req): Promise<Account> {
     // here we get the response from the service;
-    const response = await this.appService.findAll();
-    return response;
+    const { sub: idR } = req.user;
+    const response = await this.appService.findOne(+idR);
+    // disable eslint for this line, because we are returning the password;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...result } = response;
+    return { ...result, password: '' };
   }
   // creating a new account;
   @Public()
