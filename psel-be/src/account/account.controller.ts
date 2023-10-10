@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
   Patch,
   Post,
   Request,
@@ -48,13 +47,12 @@ export class AccountsController {
     return 'Account deleted';
   }
   // Updating an account;
-  @Patch(':id')
-  async updateAccount(
-    @Param() { id }: { id: string },
-    @Body() requestBody: AccountUpdateDto,
-  ) {
+  @Patch()
+  async updateAccount(@Request() req, @Body() requestBody: AccountUpdateDto) {
+    const { sub: idR } = req.user;
+
     //This is the same as const id = req.params.id;
-    const response = await this.appService.update(+id, requestBody);
+    const response = await this.appService.update(+idR, requestBody);
     return response;
   }
 }

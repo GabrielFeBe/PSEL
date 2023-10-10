@@ -6,17 +6,7 @@ import Cookies from 'js-cookie'
 const router = useRouter()
 const email = ref('')
 const password = ref('')
-const error = ref('')
-const updateEmail = (event: Event) => {
-  if (event.target) {
-    email.value = (event.target as HTMLInputElement).value
-  }
-}
-const updatePassword = (event: Event) => {
-  if (event.target) {
-    password.value = (event.target as HTMLInputElement).value
-  }
-}
+const error = ref<null | string>(null)
 
 async function loginForm(event: Event): Promise<void> {
   event.preventDefault()
@@ -40,6 +30,7 @@ async function loginForm(event: Event): Promise<void> {
         'Content-Type': 'application/json'
       }
     })
+
     if (!response.ok) {
       throw new Error(response.statusText)
     }
@@ -50,6 +41,9 @@ async function loginForm(event: Event): Promise<void> {
     router.push('/account')
   } catch (e: any) {
     error.value = e.message as string
+    setTimeout(() => {
+      error.value = null
+    }, 3000)
   }
 }
 </script>
@@ -58,14 +52,15 @@ async function loginForm(event: Event): Promise<void> {
     <form @submit="loginForm">
       <label for="email">
         Email<br />
-        <input type="email" name="email" id="email" :value="email" @input="updateEmail($event)" />
+        <input type="email" name="email" id="email" v-model="email" />
       </label>
       <label for="password">
         Password<br />
-        <input type="password" id="password" name="password" @input="updatePassword($event)" />
+        <input type="password" name="password" id="password" v-model="password" />
       </label>
       <button type="submit">Entrar</button>
     </form>
+    <p v-if="error">{{ error }}</p>
     <RouterLink to="/register">Register here</RouterLink>
   </main>
 </template>

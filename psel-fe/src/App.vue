@@ -24,7 +24,6 @@ function increment() {
       <RouterLink to="/register">Register</RouterLink>
       <RouterLink to="/account">Account</RouterLink>
       <RouterLink to="/statement">BankStatement</RouterLink>
-      <RouterLink to="/login">Login</RouterLink>
     </nav>
     <nav v-else>
       <RouterLink to="/">Home</RouterLink>

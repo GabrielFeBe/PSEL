@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref, type Ref } from 'vue'
+import { useFetchDU } from '../utils/fetchDU'
+import { type UAccount } from '../types/UpdateAcc'
 import { useRouter } from 'vue-router'
 import Cookies from 'js-cookie'
 const router = useRouter()
@@ -14,16 +16,24 @@ const deleteAccount = () => {
   Cookies.remove('token')
   router.push('/')
 }
-let timeoutId: number | null | undefined = null
-const updatingAccount = () => {
-  const { error } = useFetch(url, getToken() as string, 'PATCH')
-  if (error) {
-    updateError.value = error
+let timeoutId: number | undefined = undefined
+const updatingAccount = async () => {
+  const body: UAccount = { email: data.value?.email }
+  if (data.value && data.value?.password.length > 6) {
+    body.password = data.value?.password
+  }
+
+  const { error } = await useFetchDU(url, getToken() as string, 'PATCH', body)
+  if (error.value === null) {
+    clearInterval(timeoutId)
+    window.location.reload()
+  } else {
+    console.log(error.value)
+    clearInterval(timeoutId)
+    updateError.value = error.value
     timeoutId = setTimeout(() => {
       updateError.value = null
     }, 3000)
-  } else {
-    window.location.reload()
   }
 }
 onBeforeUnmount(() => {
@@ -31,7 +41,6 @@ onBeforeUnmount(() => {
     clearTimeout(timeoutId)
   }
 })
-console.log(updateError)
 </script>
 <template>
   <main>
@@ -46,20 +55,29 @@ console.log(updateError)
     </div>
     <h1>Account</h1>
     <div v-if="error">
-      <p>Oops! Error encountered: {{ error.message }}</p>
+      <p>Oops! Error encountered: {{ error }}</p>
     </div>
     <div v-else-if="data">
       Data loaded:
       <pre>{{ data }}</pre>
       <input type="text" v-model="data.email" />
-      <input type="text" v-model="data.password" />
-      <input v-if="data.cpf" class="disabled" type="text" :value="data.cpf" disabled="true" />
+      <label for="">
+        <input
+          type="text"
+          v-model="data.password"
+          placeholder="Put your new password here or let it empty"
+        />
+        <p v-if="data.password.length !== 0 && data.password.length < 0">Password must be valid</p>
+      </label>
+      <label for="" v-if="data.cpf">
+        <input class="disabled" type="text" :value="data.cpf" disabled="true" />
+      </label>
       <input v-else class="disabled" type="text" :value="data.cnpj" disabled="true" />
     </div>
     <div v-else>Loading...</div>
     <button @click="updatingAccount">Change</button>
     <button class="warning" @click="deleteConfirmation = true">Delete</button>
-    <div v-if="updateError?.value">{{ updateError.value.message }}</div>
+    <div v-if="updateError">{{ updateError }}</div>
   </main>
 </template>
 <style scoped>

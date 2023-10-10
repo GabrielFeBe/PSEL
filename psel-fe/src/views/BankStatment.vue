@@ -9,7 +9,7 @@ const { data, error } = useFetch(url, getToken() as string)
   <main>
     <h1>Account</h1>
     <div v-if="error">
-      <p>Oops! Error encountered: {{ error.message }}</p>
+      <p>Oops! Error encountered: {{ error }}</p>
     </div>
     <div v-else-if="data">
       Data loaded:
