@@ -9,7 +9,6 @@ const totalCashBack = ref(0)
 array.forEach((element: any) => {
   totalCashBack.value += element.value * element.cashback
 })
-console.log(totalCashBack.value)
 </script>
 <template>
   <main>
@@ -21,7 +20,22 @@ console.log(totalCashBack.value)
       Data loaded:
       <pre>{{ data }}</pre>
     </div>
-    <div v-else>Loading...</div>
+    <section v-else>
+      <div v-for="(item, index) in array" :key="index" class="operationCards">
+        {{ item.value }} {{ item.cashback }} {{ item.date }}
+      </div>
+      <div>Total Cashback: {{ totalCashBack }}</div>
+    </section>
   </main>
 </template>
-<style scoped></style>
+<style scoped>
+.operationCards {
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
+}
+</style>
