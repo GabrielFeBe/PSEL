@@ -15,7 +15,13 @@ export class Transaction {
   @Column({ type: 'decimal', precision: 5, scale: 2 })
   value: number;
 
-  @Column({ nullable: true })
+  @Column({
+    nullable: true,
+    default: 0.0,
+    type: 'decimal',
+    precision: 5,
+    scale: 2,
+  })
   cashback?: number;
 
   @OneToMany(() => Account, (account) => account.transactions)

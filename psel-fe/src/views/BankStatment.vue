@@ -2,8 +2,14 @@
 import { ref } from 'vue'
 import { getToken } from '@/utils/GetCookies'
 import { useFetch } from '@/utils/fetch'
-const url = ref('https://jsonplaceholder.typicode.com/posts')
+const url = ref('http://localhost:3000/transactions')
 const { data, error } = useFetch(url, getToken() as string)
+const array: any = data.value || []
+const totalCashBack = ref(0)
+array.forEach((element: any) => {
+  totalCashBack.value += element.value * element.cashback
+})
+console.log(totalCashBack.value)
 </script>
 <template>
   <main>

@@ -1,27 +1,14 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import Cookies from 'js-cookie'
-import { ref } from 'vue'
 
 const token = Cookies.get('token')
-
-const count = ref(0)
-
-function increment() {
-  // .value is needed in JavaScript
-  count.value++
-}
 </script>
 
 <template>
   <header>
-    <button @click="increment">
-      {{ count }}
-    </button>
-
     <nav v-if="token">
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/register">Register</RouterLink>
       <RouterLink to="/account">Account</RouterLink>
       <RouterLink to="/statement">BankStatement</RouterLink>
     </nav>
@@ -31,9 +18,20 @@ function increment() {
   </header>
 
   <RouterView />
+  <footer>
+    <p>Footer</p>
+  </footer>
 </template>
 
 <style>
+/* me de um footer com cores que contrastem com preto */
+footer {
+  background-color: white;
+  color: black;
+  padding: 1rem;
+  text-align: center;
+}
+
 input {
   width: 300px;
   height: 10px;

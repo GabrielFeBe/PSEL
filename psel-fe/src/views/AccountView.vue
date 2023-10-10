@@ -61,18 +61,21 @@ onBeforeUnmount(() => {
       Data loaded:
       <pre>{{ data }}</pre>
       <input type="text" v-model="data.email" />
-      <label for="">
+
+      <label for="" v-if="data.cpf">
+        <input class="disabled" type="text" :value="data.cpf" disabled="true" />
+      </label>
+      <input v-else class="disabled" type="text" :value="data.cnpj" disabled="true" />
+      <label for="" class="labelPassword">
         <input
           type="text"
           v-model="data.password"
           placeholder="Put your new password here or let it empty"
         />
-        <p v-if="data.password.length !== 0 && data.password.length < 0">Password must be valid</p>
+        <p v-if="data.password.length !== 0 && data.password.length < 6" class="invalidPassword">
+          Password must be valid
+        </p>
       </label>
-      <label for="" v-if="data.cpf">
-        <input class="disabled" type="text" :value="data.cpf" disabled="true" />
-      </label>
-      <input v-else class="disabled" type="text" :value="data.cnpj" disabled="true" />
     </div>
     <div v-else>Loading...</div>
     <button @click="updatingAccount">Change</button>
@@ -81,6 +84,16 @@ onBeforeUnmount(() => {
   </main>
 </template>
 <style scoped>
+.labelPassword {
+  margin-bottom: 1rem;
+  position: absolute;
+}
+.invalidPassword {
+  color: red;
+  position: relative;
+  right: 0;
+  bottom: 10px;
+}
 .warning {
   background-color: red;
   color: white;
