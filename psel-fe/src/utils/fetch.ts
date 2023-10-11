@@ -1,9 +1,8 @@
-import type { Account } from '@/types/Account';
 import type { method } from '@/types/Method';
 import { ref, watchEffect, toValue, type Ref } from 'vue'
 
-export function useFetch(url:Ref<string>, token:string , method:method = 'GET') {
-  const data = ref <Account | null>(null)
+export function useFetch <T> (url:Ref<string>, token:string , method:method = 'GET') {
+  const data = ref < T | null>(null)
   const error = ref<RTCError | null>(null);
   
   watchEffect(async () => {
@@ -26,7 +25,7 @@ export function useFetch(url:Ref<string>, token:string , method:method = 'GET') 
       if (!res.ok) {
         throw new Error(res.statusText)
       }
-      const valor:Account = await res.json()
+      const valor = await res.json()
 	    data.value = valor
     } catch (e : any) {
       error.value = e.message

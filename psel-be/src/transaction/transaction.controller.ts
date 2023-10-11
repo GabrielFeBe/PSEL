@@ -23,6 +23,7 @@ export class TransactionsController {
   async getTransactions(@Request() req): Promise<Transaction[]> {
     //Here we get the id from the token if the token is valid;
     const { sub: idR } = req.user;
+    console.log(idR);
     // then we look for the transactions with the id;
     const response = await this.appService.findAll(+idR);
     // and return the response;

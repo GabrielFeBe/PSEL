@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useRouter } from 'vue-router'
 import Cookies from 'js-cookie'
+import { getToken } from '@/utils/GetCookies'
 const router = useRouter()
 const email = ref('')
 const password = ref('')
@@ -38,7 +39,7 @@ async function loginForm(event: Event): Promise<void> {
     const expirationDate = new Date()
     expirationDate.setTime(expirationDate.getTime() + 10 * 60 * 60 * 1000)
     Cookies.set('token', data.access_token, { expires: expirationDate })
-    router.push('/account')
+    router.go(0)
   } catch (e: any) {
     error.value = e.message as string
     setTimeout(() => {
@@ -49,7 +50,7 @@ async function loginForm(event: Event): Promise<void> {
 </script>
 <template>
   <main>
-    <form @submit="loginForm">
+    <form v-if="!getToken()" @submit="loginForm">
       <label for="email">
         Email<br />
         <input type="email" name="email" id="email" v-model="email" />
@@ -59,12 +60,21 @@ async function loginForm(event: Event): Promise<void> {
         <input type="password" name="password" id="password" v-model="password" />
       </label>
       <button type="submit">Entrar</button>
+      <p v-if="error">{{ error }}</p>
+      <RouterLink to="/register">Register here</RouterLink>
     </form>
-    <p v-if="error">{{ error }}</p>
-    <RouterLink to="/register">Register here</RouterLink>
+    <section class="centralizedWelcome" v-else>Welcome to PSel Your best Payment Solution</section>
   </main>
 </template>
 <style scoped>
+.centralizedWelcome {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  font-size: 2rem;
+}
+
 label {
   display: flex;
   flex-direction: column;

@@ -34,7 +34,7 @@ router.beforeEach((to, from, next) => {
   if(token || allowedRoutes.includes(to.name as string)) {
     return next()
   } else {
-    next({name: 'login'})
+    next({name: 'home'})
   }
 
 

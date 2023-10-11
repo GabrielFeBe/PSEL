@@ -8,8 +8,9 @@ const router = useRouter()
 const deleteConfirmation = ref(false)
 import { getToken } from '../utils/GetCookies'
 import { useFetch } from '../utils/fetch'
+import type { Account } from '@/types/Account'
 const url = ref('http://localhost:3000/accounts')
-const { data, error } = useFetch(url, getToken() as string)
+const { data, error } = useFetch<Account>(url, getToken() as string)
 const updateError = ref<Ref | null>(null)
 const deleteAccount = () => {
   useFetch(url, getToken() as string, 'DELETE')

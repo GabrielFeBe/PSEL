@@ -18,7 +18,7 @@ export class TransactionsService {
   ) {}
 
   findAll(id: number): Promise<ITransaction[]> {
-    return this.TransactionsRepository.find({ where: { transactionId: id } });
+    return this.TransactionsRepository.find({ where: { accountId: id } });
   }
 
   findOne(id: number): Promise<ITransaction | null> {
