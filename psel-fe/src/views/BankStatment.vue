@@ -11,15 +11,21 @@ console.log(data.value)
 </script>
 <template>
   <main>
-    <h1>Account</h1>
+    <h1>Bank Statment</h1>
     <div v-if="error">
       <p>Oops! Error encountered: {{ error }}</p>
     </div>
     <div v-else-if="data">
-      <div v-for="(item, index) in data" :key="index" class="operationCards">
-        {{ item.value }} {{ item.cashback }} {{ item.date }}
-      </div>
-      <div>Total Cashback: {{ cashBackCaluator(data) }}</div>
+      <section class="statmentCards">
+        <div v-for="(item, index) in data" :key="index" class="operationCards">
+          <p>{{ `Payment Value: ${item.value} ` }}</p>
+          <p>{{ `Cashback received: ${item.cashback}  ` }}</p>
+          <p>
+            {{ `Payment date: ${item.date}  ` }}
+          </p>
+        </div>
+      </section>
+      <div>{{ `Total Cashback´ ${cashBackCaluator(data)} ` }}</div>
     </div>
     <div v-else>Loading...</div>
   </main>
@@ -27,11 +33,24 @@ console.log(data.value)
 <style scoped>
 .operationCards {
   border: 1px solid white;
+  flex-direction: column;
   border-radius: 5px;
   padding: 10px;
   margin: 10px;
   width: 300px;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: space-around;
+  height: 200px;
+}
+.statmentCards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+h1 {
+  text-align: center;
+  padding: 10px;
 }
 </style>
