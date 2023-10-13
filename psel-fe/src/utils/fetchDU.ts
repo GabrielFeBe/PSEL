@@ -2,9 +2,9 @@ import type { Account } from '@/types/Account';
 import type { method } from '@/types/Method';
 import { ref, toValue,type Ref } from 'vue';
 
-export async function useFetchDU(url: Ref<string>, token: string, method: method = 'GET', body?: any) {
+export async function useFetchDU(url: Ref<string>, method: method = 'GET', body?: any , token?: string,) {
   const data = ref<Account | null>(null);
-  const error = ref<RTCError | null>(null);
+  const error = ref<string | null>(null);
 
   await new Promise<void>((resolve) => {
     data.value = null;
@@ -34,6 +34,7 @@ export async function useFetchDU(url: Ref<string>, token: string, method: method
         resolve();
       })
       .catch((e) => {
+        console.log(e)
         error.value = e.message;
         resolve();
       });

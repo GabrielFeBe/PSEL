@@ -25,7 +25,7 @@ const updateValue = (event: Event) => {
     <CnpjInputVue />
   </div>
   <!-- <RouterLink to="/"> -->
-  <button type="submit">Enviar</button>
+  <button type="submit">Register</button>
   <!-- </RouterLink> -->
 </template>
 

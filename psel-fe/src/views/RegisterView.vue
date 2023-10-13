@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import SelectCpfOrCnpj from '@/components/ SelectCpfOrCnpj.vue'
 import EmailPassword from '@/components/EmailPassword.vue'
+import { useFetchDU } from '@/utils/fetchDU'
 import { ref } from 'vue'
-
-const error = ref('')
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const error = ref<string | null>(null)
+const url = ref('http://localhost:3000/accounts')
 
 async function submitForm(event: Event): Promise<void> {
   event.preventDefault()
@@ -17,31 +20,20 @@ async function submitForm(event: Event): Promise<void> {
   // cnpj or cpf one of them will be null always
   const cpf = formData.get('cpf') as string
   const cnpj = formData.get('cnpj') as string
+  const name = formData.get('name') as string
+  const lastName = formData.get('lastName') as string
 
   console.log('Email:', email)
   console.log('Password:', password)
   console.log('Confirm Password:', confirmPassword)
   console.log('CPF:', cpf)
   console.log('CNPJ:', cnpj)
-  try {
-    const response = await fetch('mock-url.com', {
-      body: JSON.stringify({
-        email,
-        password,
-        confirmPassword,
-        cpf,
-        cnpj
-      }),
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    if (!response.ok) {
-      throw new Error(response.statusText)
-    }
-  } catch (e: any) {
-    error.value = e.message as string
+  const body = { email, password, cpf, cnpj, name, lastName }
+  const { error: errorR } = await useFetchDU(url, 'POST', body)
+  if (errorR.value) {
+    error.value = errorR.value
+  } else {
+    router.push('/')
   }
 }
 </script>
@@ -52,7 +44,7 @@ async function submitForm(event: Event): Promise<void> {
       <EmailPassword />
       <SelectCpfOrCnpj />
     </form>
-    <p v-if="error.length > 1">{{ error }}</p>
+    <p v-if="error">{{ error }}</p>
   </main>
 </template>
 

@@ -18,4 +18,12 @@ export class AccountUpdateDto {
   @IsOptional()
   @IsString()
   password?: string;
+
+  @IsOptional()
+  @IsString()
+  name?: string;
+
+  @IsOptional()
+  @IsString()
+  lastName?: string;
 }

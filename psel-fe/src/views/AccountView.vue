@@ -24,7 +24,7 @@ const updatingAccount = async () => {
     body.password = data.value?.password
   }
 
-  const { error } = await useFetchDU(url, getToken() as string, 'PATCH', body)
+  const { error } = await useFetchDU(url, 'PATCH', body, getToken() as string)
   if (error.value === null) {
     clearInterval(timeoutId)
     window.location.reload()
@@ -67,6 +67,13 @@ onBeforeUnmount(() => {
         <input class="disabled" type="text" :value="data.cpf" disabled="true" />
       </label>
       <input v-else class="disabled" type="text" :value="data.cnpj" disabled="true" />
+
+      <label for="name">
+        <input type="text" name="name" id="name" v-model="data.name" />
+      </label>
+      <label for="lastName">
+        <input type="text" name="lastName" id="lastName" v-model="data.lastName" />
+      </label>
       <label for="" class="labelPassword">
         <input
           type="text"

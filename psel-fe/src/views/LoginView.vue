@@ -4,10 +4,12 @@ import { RouterLink } from 'vue-router'
 import { useRouter } from 'vue-router'
 import Cookies from 'js-cookie'
 import { getToken } from '@/utils/GetCookies'
+import { useFetchDU } from '@/utils/fetchDU'
 const router = useRouter()
+const url = ref('http://localhost:3000/auth/login')
 const email = ref('')
 const password = ref('')
-const error = ref<null | string>(null)
+const errorPage = ref<null | string>(null)
 
 async function loginForm(event: Event): Promise<void> {
   event.preventDefault()
@@ -20,31 +22,14 @@ async function loginForm(event: Event): Promise<void> {
 
   console.log('Email:', email)
   console.log('Password:', password)
-  try {
-    const response = await fetch('http://localhost:3000/auth/login', {
-      body: JSON.stringify({
-        email,
-        password
-      }),
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-
-    if (!response.ok) {
-      throw new Error(response.statusText)
-    }
-    const data = await response.json()
-    const expirationDate = new Date()
-    expirationDate.setTime(expirationDate.getTime() + 10 * 60 * 60 * 1000)
-    Cookies.set('token', data.access_token, { expires: expirationDate })
+  const body = { email, password }
+  const { error, data } = await useFetchDU(url, 'POST', body, getToken() as string)
+  if (error.value) {
+    errorPage.value = error.value
+  } else {
+    const alo = data.value as any
+    Cookies.set('token', alo.access_token)
     router.go(0)
-  } catch (e: any) {
-    error.value = e.message as string
-    setTimeout(() => {
-      error.value = null
-    }, 3000)
   }
 }
 </script>
@@ -59,8 +44,9 @@ async function loginForm(event: Event): Promise<void> {
         Password<br />
         <input type="password" name="password" id="password" v-model="password" />
       </label>
+
       <button type="submit">Entrar</button>
-      <p v-if="error">{{ error }}</p>
+      <p v-if="errorPage">{{ errorPage }}</p>
       <RouterLink to="/register">Register here</RouterLink>
     </form>
     <section class="centralizedWelcome" v-else>Welcome to PSel Your best Payment Solution</section>

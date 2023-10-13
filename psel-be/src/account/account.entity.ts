@@ -21,6 +21,12 @@ export class Account {
   @Column()
   password: string;
 
+  @Column()
+  name: string;
+
+  @Column()
+  lastName: string;
+
   @OneToMany(() => Transaction, (transaction) => transaction.account)
   transactions: Transaction[];
 }

@@ -5,4 +5,6 @@
   email: string,
   isActive: boolean,
   password: string
+  name: string,
+  lastName: string,
 }

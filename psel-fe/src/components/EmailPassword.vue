@@ -2,6 +2,8 @@
 import { ref } from 'vue'
 const email = ref('')
 const password = ref('')
+const name = ref('')
+const lastName = ref('')
 const confirmPassword = ref('')
 const updateEmail = (event: Event) => {
   if (event.target) {
@@ -38,6 +40,14 @@ const updateConfirmationPassword = (event: Event) => {
         name="confirmPassword"
         @input="updateConfirmationPassword($event)"
       />
+    </label>
+    <label for="name">
+      Name<br />
+      <input type="text" name="name" id="name" v-model="name" />
+    </label>
+    <label for="lastName">
+      Last Name<br />
+      <input type="text" name="lastName" id="lastName" v-model="lastName" />
     </label>
   </div>
 </template>
