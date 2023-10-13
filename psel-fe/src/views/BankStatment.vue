@@ -6,8 +6,7 @@ import { cashBackCaluator } from '@/utils/CashbackCalc'
 import { type Transaction } from '../types/Transaction'
 const url = ref('http://localhost:3000/transactions')
 const { data, error } = useFetch<Transaction[]>(url, getToken() as string)
-
-console.log(data.value)
+import dayjs from 'dayjs'
 </script>
 <template>
   <main>
@@ -21,11 +20,11 @@ console.log(data.value)
           <p>{{ `Payment Value: ${item.value} ` }}</p>
           <p>{{ `Cashback received: ${item.cashback}  ` }}</p>
           <p>
-            {{ `Payment date: ${item.date}  ` }}
+            {{ `Payment date: ${dayjs(item.date).format('MMMM D, YYYY')}  ` }}
           </p>
         </div>
       </section>
-      <div>{{ `Total Cashback´ ${cashBackCaluator(data)} ` }}</div>
+      <div class="cashbackTotal">{{ `Total Cashback: ${cashBackCaluator(data)} ` }}</div>
     </div>
     <div v-else>Loading...</div>
   </main>
@@ -52,5 +51,11 @@ console.log(data.value)
 h1 {
   text-align: center;
   padding: 10px;
+}
+.cashbackTotal {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 </style>
