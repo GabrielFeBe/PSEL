@@ -24,6 +24,12 @@ const router = createRouter({
       path: '/statement',
       name: 'statement',
       component: () => import('../views/BankStatment.vue')
+    },
+    {
+      path:'/logout',
+      name: 'logout',
+      // now i need to set the cookie to null, and redirect to home
+      component: () => import('../views/LoginView.vue')
     }
   ]
 })
@@ -31,14 +37,20 @@ const router = createRouter({
 const allowedRoutes = ['register', 'home']
 router.beforeEach((to, from, next) => {
   const token = Cookies.get('token');
+  if(to.name === 'logout') {
+    Cookies.remove('token')
+    if(from.name === 'home') {
+      router.go(0)
+    } else {
+      next({name: 'home'})
+    }
+  }
+ 
   if(token || allowedRoutes.includes(to.name as string)) {
     return next()
   } else {
     next({name: 'home'})
   }
-
-
-
 })
 
 

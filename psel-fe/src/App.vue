@@ -11,6 +11,7 @@ const token = Cookies.get('token')
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/account">Account</RouterLink>
       <RouterLink to="/statement">BankStatement</RouterLink>
+      <RouterLink to="/logout">Logout</RouterLink>
     </nav>
     <nav v-else>
       <RouterLink to="/">Home</RouterLink>

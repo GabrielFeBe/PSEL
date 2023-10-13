@@ -73,6 +73,10 @@ async function loginForm(event: Event): Promise<void> {
   align-items: center;
   min-height: 90vh;
   font-size: 2rem;
+  background-size: cover;
+  color: var(--color-text);
+  font-weight: 700;
+  background-image: url('https://cdn.leonardo.ai/users/632e8b5a-030d-43f0-9b22-e8865406594c/generations/69b0ba1f-b6b0-457e-8708-1ebb9e151305/DreamShaper_v7_make_a_image_of_bills_in_a_table_looking_like_a_0.jpg');
 }
 
 label {

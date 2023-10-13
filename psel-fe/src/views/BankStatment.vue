@@ -31,7 +31,7 @@ import dayjs from 'dayjs'
 </template>
 <style scoped>
 .operationCards {
-  border: 1px solid white;
+  border: 1px solid var(--color-border);
   flex-direction: column;
   border-radius: 5px;
   padding: 10px;
