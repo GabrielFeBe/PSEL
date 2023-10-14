@@ -1,21 +1,43 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import Cookies from 'js-cookie'
+import { ref } from 'vue'
+import { useFetch } from './utils/fetch'
+import type { Account } from './types/Account'
+import { getToken } from './utils/GetCookies'
 
-const token = Cookies.get('token')
+const url = ref('http://localhost:3000/accounts')
+const { data } = useFetch<Account>(url, getToken() as string)
 </script>
 
 <template>
-  <header>
-    <nav v-if="token">
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/account">Account</RouterLink>
-      <RouterLink to="/statement">BankStatement</RouterLink>
-      <RouterLink to="/logout">Logout</RouterLink>
-    </nav>
-    <nav v-else>
-      <RouterLink to="/">Home</RouterLink>
-    </nav>
+  <header v-if="data">
+    <div class="headerSpaceBetwen">
+      <div>
+        <h1>PSel</h1>
+        <p>
+          {{ `Welcome ${data.name} ${data.lastName} ` }}
+        </p>
+        <p>
+          {{ data.cnpj ? `CNPJ: ${data.cnpj}` : `CPF: ${data.cpf}` }}
+        </p>
+      </div>
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/account">Account</RouterLink>
+        <RouterLink to="/statement">BankStatement</RouterLink>
+        <RouterLink to="/logout">Logout</RouterLink>
+      </nav>
+    </div>
+  </header>
+  <header v-else>
+    <div class="headerSpaceBetwen">
+      <div>
+        <h1>PSel</h1>
+      </div>
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+      </nav>
+    </div>
   </header>
 
   <RouterView />
@@ -25,12 +47,13 @@ const token = Cookies.get('token')
 </template>
 
 <style>
-/* me de um footer com cores que contrastem com preto */
-footer {
-  background-color: white;
-  color: black;
-  padding: 1rem;
-  text-align: center;
+.logoSmall {
+  width: 50px;
+  height: 50px;
+}
+.headerSpaceBetwen {
+  display: flex;
+  justify-content: space-between;
 }
 
 input {

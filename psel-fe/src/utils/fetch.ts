@@ -3,7 +3,7 @@ import { ref, watchEffect, toValue, type Ref } from 'vue'
 
 export function useFetch <T> (url:Ref<string>, token:string , method:method = 'GET') {
   const data = ref < T | null>(null)
-  const error = ref<RTCError | null>(null);
+  const error = ref<string | null>(null);
   
   watchEffect(async () => {
     data.value = null
