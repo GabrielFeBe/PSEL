@@ -12,7 +12,7 @@ const { data } = useFetch<Account>(url, getToken() as string)
 <template>
   <header v-if="data">
     <div class="headerSpaceBetwen">
-      <div>
+      <div class="infoBox">
         <h1>PSel</h1>
         <p>
           {{ `Welcome ${data.name} ${data.lastName} ` }}
@@ -21,7 +21,7 @@ const { data } = useFetch<Account>(url, getToken() as string)
           {{ data.cnpj ? `CNPJ: ${data.cnpj}` : `CPF: ${data.cpf}` }}
         </p>
       </div>
-      <nav>
+      <nav class="routerBox">
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/account">Account</RouterLink>
         <RouterLink to="/statement">BankStatement</RouterLink>
@@ -41,19 +41,38 @@ const { data } = useFetch<Account>(url, getToken() as string)
   </header>
 
   <RouterView />
-  <footer>
+  <!-- <footer>
     <p>Footer</p>
-  </footer>
+  </footer> -->
 </template>
 
 <style>
-.logoSmall {
-  width: 50px;
-  height: 50px;
+.routerBox {
+  display: flex;
+  justify-content: space-around;
+  width: 300px;
+  align-items: center;
+  font-size: 16px;
 }
+
+.infoBox {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 16px;
+  width: 500px;
+}
+
 .headerSpaceBetwen {
+  margin-left: 16px;
+  margin-right: 16px;
   display: flex;
   justify-content: space-between;
+}
+
+header {
+  position: fixed;
+  width: 100%;
 }
 
 input {

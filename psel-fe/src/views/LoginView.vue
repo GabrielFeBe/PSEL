@@ -37,16 +37,16 @@ async function loginForm(event: Event): Promise<void> {
   <main>
     <form v-if="!getToken()" @submit="loginForm">
       <label for="email">
-        Email<br />
+        <span> Email </span>
         <input type="email" name="email" id="email" v-model="email" />
       </label>
       <label for="password">
-        Password<br />
+        <span> Password </span>
         <input type="password" name="password" id="password" v-model="password" />
       </label>
-
+      <span class="error" v-if="errorPage">{{ errorPage }}</span>
       <button type="submit">Entrar</button>
-      <p v-if="errorPage">{{ errorPage }}</p>
+
       <RouterLink to="/register">Register here</RouterLink>
     </form>
     <section class="centralizedWelcome" v-else>Welcome to PSel Your best Payment Solution</section>
@@ -68,6 +68,49 @@ async function loginForm(event: Event): Promise<void> {
 label {
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin-bottom: 1rem;
+  text-align: left;
+}
+
+form {
+  position: relative;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+main {
+  padding-top: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+span {
+  padding-bottom: 10px;
+}
+
+button {
+  background-color: hsla(160, 100%, 37%, 1);
+  padding: 0.8rem;
+  border-radius: 15px;
+  cursor: pointer;
+  border: 0;
+}
+
+button:hover {
+  background-color: hsla(160, 100%, 37%, 0.8);
+}
+.error {
+  color: red;
+  height: 1rem;
+  position: absolute;
+  bottom: 150px;
 }
 </style>
