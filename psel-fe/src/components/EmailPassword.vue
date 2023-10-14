@@ -1,23 +1,28 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-const email = ref('')
-const password = ref('')
-const name = ref('')
-const lastName = ref('')
-const confirmPassword = ref('')
+import { formsStore } from '@/stores/Form'
+import type { Account } from '@/types/Account'
+interface Props {
+  objectForm?: Partial<Account>
+}
+const props = defineProps<Props>()
+if (props.objectForm) {
+  formsStore.email = props.objectForm.email as string
+  formsStore.name = props.objectForm.name as string
+  formsStore.lastName = props.objectForm.lastName as string
+}
 const updateEmail = (event: Event) => {
   if (event.target) {
-    email.value = (event.target as HTMLInputElement).value
+    formsStore.email = (event.target as HTMLInputElement).value
   }
 }
 const updatePassword = (event: Event) => {
   if (event.target) {
-    password.value = (event.target as HTMLInputElement).value
+    formsStore.password = (event.target as HTMLInputElement).value
   }
 }
 const updateConfirmationPassword = (event: Event) => {
   if (event.target) {
-    confirmPassword.value = (event.target as HTMLInputElement).value
+    formsStore.confirmPassword = (event.target as HTMLInputElement).value
   }
 }
 </script>
@@ -25,31 +30,49 @@ const updateConfirmationPassword = (event: Event) => {
 <template>
   <div>
     <label for="email">
-      Email<br />
-      <input type="email" name="email" id="email" :value="email" @input="updateEmail($event)" />
+      Email
+      <input
+        type="email"
+        name="email"
+        id="email"
+        :value="formsStore.email"
+        @input="updateEmail($event)"
+      />
     </label>
     <label for="password">
-      Password<br />
-      <input type="password" id="password" name="password" @input="updatePassword($event)" />
+      Password
+      <input
+        type="password"
+        id="password"
+        name="password"
+        :value="formsStore.password"
+        @input="updatePassword($event)"
+      />
     </label>
     <label for="confirmPassword">
-      Confirm Password<br />
+      Confirm Password
       <input
         type="password"
         id="confirmPassword"
         name="confirmPassword"
+        :value="formsStore.confirmPassword"
         @input="updateConfirmationPassword($event)"
       />
     </label>
     <label for="name">
-      Name<br />
-      <input type="text" name="name" id="name" v-model="name" />
+      Name
+      <input type="text" name="name" id="name" v-model="formsStore.name" />
     </label>
     <label for="lastName">
-      Last Name<br />
-      <input type="text" name="lastName" id="lastName" v-model="lastName" />
+      Last Name
+      <input type="text" name="lastName" id="lastName" v-model="formsStore.lastName" />
     </label>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+label {
+  display: flex;
+  flex-direction: column;
+}
+</style>

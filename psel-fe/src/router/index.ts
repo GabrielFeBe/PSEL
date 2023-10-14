@@ -39,11 +39,8 @@ router.beforeEach((to, from, next) => {
   const token = Cookies.get('token');
   if(to.name === 'logout') {
     Cookies.remove('token')
-    if(from.name === 'home') {
-      router.go(0)
-    } else {
-      next({name: 'home'})
-    }
+    next({name: 'home'})
+    router.go(0)
   }
  
   if(token || allowedRoutes.includes(to.name as string)) {

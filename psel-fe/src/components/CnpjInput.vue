@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { validateCnpj } from '@/utils/CnpjValidator'
 import { ref } from 'vue'
+import { formsStore } from '../stores/Form'
 const isCnpjValid = ref(true)
-const cnpj = ref('')
 const validateInput = () => {
-  isCnpjValid.value = validateCnpj(cnpj.value)
+  isCnpjValid.value = validateCnpj(formsStore.cnpj)
 }
 let validationTimeout: number | undefined = undefined
 
 const updateCpf = (event: Event) => {
   if (event.target) {
     isCnpjValid.value = true
-    cnpj.value = (event.target as HTMLInputElement).value
+    formsStore.cnpj = (event.target as HTMLInputElement).value
     clearTimeout(validationTimeout)
     validationTimeout = setTimeout(validateInput, 1000)
   }
@@ -21,8 +21,8 @@ const updateCpf = (event: Event) => {
 <template>
   <label for="cnpj">
     Cnpj<br />
-    <input type="text" id="cnpj" name="cnpj" :value="cnpj" @input="updateCpf($event)" />
-    <span v-if="cnpj.length > 0 && !isCnpjValid">CNPJ inválido</span>
+    <input type="text" id="cnpj" name="cnpj" :value="formsStore.cnpj" @input="updateCpf($event)" />
+    <span v-if="formsStore.cnpj.length > 0 && !isCnpjValid">CNPJ inválido</span>
   </label>
 </template>
 

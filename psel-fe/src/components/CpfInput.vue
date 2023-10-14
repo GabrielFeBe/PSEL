@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { ValidateCPF } from '../utils/CpfValidator'
 import { ref } from 'vue'
+import { formsStore } from '../stores/Form'
 const isCPFValid = ref(true)
-const cpf = ref('')
+
 const validateInput = () => {
-  isCPFValid.value = ValidateCPF(cpf.value)
+  isCPFValid.value = ValidateCPF(formsStore.cpf)
 }
 let validationTimeout: number | undefined = undefined
 
 const updateCpf = (event: Event) => {
   if (event.target) {
     isCPFValid.value = true
-    cpf.value = (event.target as HTMLInputElement).value
+    formsStore.cpf = (event.target as HTMLInputElement).value
     clearTimeout(validationTimeout)
     validationTimeout = setTimeout(validateInput, 1000)
   }
@@ -21,8 +22,8 @@ const updateCpf = (event: Event) => {
 <template>
   <label for="cpf">
     Cpf<br />
-    <input type="text" id="cpf" name="cpf" :value="cpf" @input="updateCpf($event)" />
-    <span v-if="cpf.length > 0 && !isCPFValid">CPF inválido</span>
+    <input type="text" id="cpf" name="cpf" :value="formsStore.cpf" @input="updateCpf($event)" />
+    <span v-if="formsStore.cpf.length > 0 && !isCPFValid">CPF inválido</span>
   </label>
 </template>
 

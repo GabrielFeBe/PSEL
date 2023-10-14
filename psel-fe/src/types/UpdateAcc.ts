@@ -1,4 +1,6 @@
 export interface UAccount {
-  email?: string;
+  email: string;
   password?: string;
+  name:string;
+  lastName:string;
 }

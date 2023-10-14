@@ -3,13 +3,16 @@ import { onBeforeUnmount, ref, type Ref } from 'vue'
 import { useFetchDU } from '../utils/fetchDU'
 import { type UAccount } from '../types/UpdateAcc'
 import { useRouter } from 'vue-router'
+import { formsStore } from '@/stores/Form'
 import Cookies from 'js-cookie'
 const router = useRouter()
 const deleteConfirmation = ref(false)
 import { getToken } from '../utils/GetCookies'
 import { useFetch } from '../utils/fetch'
 import type { Account } from '@/types/Account'
+import EmailPassword from '@/components/EmailPassword.vue'
 const url = ref('http://localhost:3000/accounts')
+
 const { data, error } = useFetch<Account>(url, getToken() as string)
 const updateError = ref<Ref | null>(null)
 const deleteAccount = () => {
@@ -19,9 +22,13 @@ const deleteAccount = () => {
 }
 let timeoutId: number | undefined = undefined
 const updatingAccount = async () => {
-  const body: UAccount = { email: data.value?.email }
-  if (data.value && data.value?.password.length > 6) {
-    body.password = data.value?.password
+  const body: UAccount = {
+    email: formsStore.email,
+    name: formsStore.name,
+    lastName: formsStore.lastName
+  }
+  if (formsStore.password.length > 6) {
+    body.password = formsStore.password
   }
 
   const { error } = await useFetchDU(url, 'PATCH', body, getToken() as string)
@@ -61,29 +68,12 @@ onBeforeUnmount(() => {
     <div v-else-if="data">
       Data loaded:
       <pre>{{ data }}</pre>
-      <input type="text" v-model="data.email" />
 
       <label for="" v-if="data.cpf">
         <input class="disabled" type="text" :value="data.cpf" disabled="true" />
       </label>
       <input v-else class="disabled" type="text" :value="data.cnpj" disabled="true" />
-
-      <label for="name">
-        <input type="text" name="name" id="name" v-model="data.name" />
-      </label>
-      <label for="lastName">
-        <input type="text" name="lastName" id="lastName" v-model="data.lastName" />
-      </label>
-      <label for="" class="labelPassword">
-        <input
-          type="text"
-          v-model="data.password"
-          placeholder="Put your new password here or let it empty"
-        />
-        <p v-if="data.password.length !== 0 && data.password.length < 6" class="invalidPassword">
-          Password must be valid
-        </p>
-      </label>
+      <EmailPassword :object-form="data" />
     </div>
     <div v-else>Loading...</div>
     <button @click="updatingAccount">Change</button>
@@ -114,7 +104,6 @@ onBeforeUnmount(() => {
 .disabled {
   background-color: #ccc;
 }
-/* confirmD will be a div that will be absolute and will work like a huge blur on the whole page */
 .confirmD {
   position: absolute;
   top: 0;
