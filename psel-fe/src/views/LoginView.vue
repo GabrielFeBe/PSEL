@@ -96,17 +96,6 @@ span {
   padding-bottom: 10px;
 }
 
-button {
-  background-color: hsla(160, 100%, 37%, 1);
-  padding: 0.8rem;
-  border-radius: 15px;
-  cursor: pointer;
-  border: 0;
-}
-
-button:hover {
-  background-color: hsla(160, 100%, 37%, 0.8);
-}
 .error {
   color: red;
   height: 1rem;

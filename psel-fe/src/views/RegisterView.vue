@@ -57,4 +57,20 @@ async function submitForm(event: Event): Promise<void> {
     justify-content: center;
   }
 }
+form {
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  width: 400px;
+  height: 530px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+main {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 </style>
