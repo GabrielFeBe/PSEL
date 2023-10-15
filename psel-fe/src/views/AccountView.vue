@@ -52,6 +52,8 @@ onBeforeUnmount(() => {
 </script>
 <template>
   <main>
+    <h1>Account</h1>
+
     <div v-if="deleteConfirmation" class="confirmD">
       <div class="confirmB">
         <p class="confirmT">Are you sure you want to delete your account?</p>
@@ -61,27 +63,55 @@ onBeforeUnmount(() => {
         </div>
       </div>
     </div>
-    <h1>Account</h1>
     <div v-if="error">
       <p>Oops! Error encountered: {{ error }}</p>
     </div>
-    <div v-else-if="data">
-      Data loaded:
-      <pre>{{ data }}</pre>
-
+    <div v-else-if="data" class="boxAccount">
       <label for="" v-if="data.cpf">
+        Cpf
         <input class="disabled" type="text" :value="data.cpf" disabled="true" />
       </label>
-      <input v-else class="disabled" type="text" :value="data.cnpj" disabled="true" />
+      <label for="" v-else>
+        <input class="disabled" type="text" :value="data.cnpj" disabled="true" />
+      </label>
       <EmailPassword :object-form="data" />
+      <div class="buttonBox">
+        <button @click="updatingAccount">Change</button>
+        <button class="warning" @click="deleteConfirmation = true">Delete</button>
+      </div>
     </div>
     <div v-else>Loading...</div>
-    <button @click="updatingAccount">Change</button>
-    <button class="warning" @click="deleteConfirmation = true">Delete</button>
+
     <div v-if="updateError">{{ updateError }}</div>
   </main>
 </template>
 <style scoped>
+.boxAccount {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+  height: 550px;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+}
+
+.buttonBox {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+  padding-bottom: 100px;
+}
+label {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
 .labelPassword {
   margin-bottom: 1rem;
   position: absolute;
@@ -93,13 +123,17 @@ onBeforeUnmount(() => {
   bottom: 10px;
 }
 .warning {
+  width: 72px;
   background-color: red;
-  color: white;
-  border: none;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  font-size: 1rem;
+  padding: 0.8rem;
+  border-radius: 15px;
   cursor: pointer;
+  border: 0;
+  cursor: pointer;
+}
+
+.warning:hover {
+  background-color: #c51818;
 }
 .disabled {
   background-color: #ccc;
@@ -141,5 +175,14 @@ onBeforeUnmount(() => {
   border-radius: 0.5rem;
   font-size: 1rem;
   cursor: pointer;
+}
+
+main {
+  padding-top: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 </style>

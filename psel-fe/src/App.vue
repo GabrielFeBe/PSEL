@@ -34,7 +34,7 @@ const { data } = useFetch<Account>(url, getToken() as string)
       <div>
         <h1>PSel</h1>
       </div>
-      <nav>
+      <nav class="routerBox">
         <RouterLink to="/">Home</RouterLink>
       </nav>
     </div>
