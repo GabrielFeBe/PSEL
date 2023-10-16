@@ -50,12 +50,21 @@ import dayjs from 'dayjs'
 
 h1 {
   text-align: center;
-  padding: 10px;
+  padding-bottom: 100px;
 }
 .cashbackTotal {
   text-align: center;
   font-size: 20px;
   font-weight: bold;
-  margin-bottom: 10px;
+  padding-top: 10px;
+}
+
+main {
+  padding-top: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 </style>

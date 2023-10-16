@@ -40,6 +40,7 @@ async function submitForm(event: Event): Promise<void> {
 
 <template>
   <main>
+    <h1>Register</h1>
     <form @submit="submitForm">
       <EmailPassword />
       <SelectCpfOrCnpj />
@@ -49,6 +50,10 @@ async function submitForm(event: Event): Promise<void> {
 </template>
 
 <style scoped>
+h1 {
+  padding-bottom: 100px;
+}
+
 @media (min-width: 1024px) {
   div {
     display: flex;
@@ -68,6 +73,7 @@ form {
   justify-content: center;
 }
 main {
+  flex-direction: column;
   min-height: 100vh;
   display: flex;
   align-items: center;

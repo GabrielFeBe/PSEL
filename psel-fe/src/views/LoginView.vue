@@ -35,6 +35,7 @@ async function loginForm(event: Event): Promise<void> {
 </script>
 <template>
   <main>
+    <h1>Login</h1>
     <form v-if="!getToken()" @submit="loginForm">
       <label for="email">
         <span> Email </span>
@@ -53,16 +54,18 @@ async function loginForm(event: Event): Promise<void> {
   </main>
 </template>
 <style scoped>
+h1 {
+  padding-bottom: 100px;
+}
 .centralizedWelcome {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 90vh;
+  min-height: 100vh;
   font-size: 2rem;
   background-size: cover;
   color: var(--color-text);
   font-weight: 700;
-  background-image: url('https://cdn.leonardo.ai/users/632e8b5a-030d-43f0-9b22-e8865406594c/generations/69b0ba1f-b6b0-457e-8708-1ebb9e151305/DreamShaper_v7_make_a_image_of_bills_in_a_table_looking_like_a_0.jpg');
 }
 
 label {
@@ -91,6 +94,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 span {
   padding-bottom: 10px;
