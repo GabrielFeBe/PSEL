@@ -13,7 +13,7 @@ import { Account } from './account.entity';
 import { ValidationPipe } from '@nestjs/common';
 import { AccountDto } from './account.validator';
 import { AccountUpdateDto } from './update.validator';
-import { Public } from 'src/utils/public';
+import { Public } from '../utils/public';
 
 @Controller('accounts')
 @UsePipes(new ValidationPipe())
