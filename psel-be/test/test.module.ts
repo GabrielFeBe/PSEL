@@ -2,9 +2,11 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Account } from '../src/account/account.entity';
 import { AccountModule } from '../src/account/account.module';
-import { AuthModule } from '../src/auth/auth.module';
 import { TransactionModule } from '../src/transaction/transaction.module';
-import { Transaction } from 'typeorm';
+import { Transaction } from '../src/transaction/transaction.entity';
+import { AuthModule } from '../src/auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './authtest.guard';
 
 @Module({
   imports: [
@@ -21,5 +23,11 @@ import { Transaction } from 'typeorm';
     AccountModule,
     AuthModule,
   ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
-export class AppModule {}
+export class TestModule {}

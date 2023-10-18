@@ -22,6 +22,8 @@ export class AccountsController {
 
   @Get()
   async getAccounts(@Request() req): Promise<Account> {
+    console.log(req.user);
+
     // here we get the response from the service;
     const { sub: idR } = req.user;
     const response = await this.appService.findOne(+idR);

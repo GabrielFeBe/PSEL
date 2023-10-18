@@ -9,7 +9,7 @@ describe('AppController (e2e), only for UNAUTHORIZED and to check if it exists',
   // const accountServiceMock = { findAll: () => ['test'] };
   beforeAll(async () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
-      imports: [AppModule], // Importe o AppModule aqui
+      imports: [AppModule],
     }).compile();
 
     app = moduleRef.createNestApplication();
@@ -26,7 +26,6 @@ describe('AppController (e2e), only for UNAUTHORIZED and to check if it exists',
       .expect(401)
       .expect({ message: 'Unauthorized', statusCode: 401 }); // Substitua com o resultado esperado
   });
-  // need to make a test for each route that returns unauthorized;
   it(`/POST transactions`, () => {
     return request(app.getHttpServer())
       .post('/transactions')
