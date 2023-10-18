@@ -1,7 +1,7 @@
-import { IsInt, IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CashbackDTO {
-  @IsNotEmpty({ message: 'O campo cashback é obrigatório' })
-  @IsInt({ message: 'O campo cashback deve ser um número inteiro' })
+  @IsNotEmpty({ message: 'cashback must not be empty' })
+  @IsNumber({ maxDecimalPlaces: 2 })
   cashback: number;
 }
