@@ -25,7 +25,3 @@ services:
     environment:
       - POSTGRES_PASSWORD=102030
     restart: 'always'
-    healthcheck:
-      test: [ "CMD", "pg_isready", "-h", "localhost", "-U", "postgres" ]
-      timeout: 10s
-      retries: 5
