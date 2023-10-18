@@ -1,4 +1,10 @@
-import { IsBoolean, IsEmail, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsEmail,
+  IsOptional,
+  IsString,
+  Length,
+} from 'class-validator';
 
 export class AccountUpdateDto {
   @IsOptional()
@@ -17,6 +23,7 @@ export class AccountUpdateDto {
 
   @IsOptional()
   @IsString()
+  @Length(8, 20)
   password?: string;
 
   @IsOptional()

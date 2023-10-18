@@ -5,6 +5,7 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  Length,
   Validate,
 } from 'class-validator';
 import { IsCpfValidConstraint } from './cpf.validator';
@@ -37,6 +38,7 @@ export class AccountDto {
 
   @IsNotEmpty()
   @IsString()
+  @Length(8, 20)
   password: string;
 
   @IsNotEmpty()
