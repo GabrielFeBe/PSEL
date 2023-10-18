@@ -7,16 +7,16 @@ export class Account {
   id: number;
 
   @Column({ nullable: true })
-  cpf: string;
+  cpf?: string;
 
   @Column({ nullable: true })
-  cnpj: string;
+  cnpj?: string;
 
   @Column()
   email: string;
 
-  @Column({ default: true })
-  isActive: boolean;
+  @Column({ default: true, nullable: true })
+  isActive?: boolean;
 
   @Column()
   password: string;

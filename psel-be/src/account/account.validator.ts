@@ -33,7 +33,7 @@ export class AccountDto {
 
   @IsOptional()
   @IsBoolean()
-  isActive: boolean;
+  isActive?: boolean;
 
   @IsNotEmpty()
   @IsString()
