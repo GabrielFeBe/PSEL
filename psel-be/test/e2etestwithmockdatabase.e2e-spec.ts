@@ -2,6 +2,7 @@ import * as request from 'supertest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { TestModule } from './test.module';
+import { createConnection } from 'typeorm';
 
 describe('AppController (e2e), free of auth for Accounts and with a mocking db to test if the information stands at the database', () => {
   let app: INestApplication;
@@ -23,6 +24,7 @@ describe('AppController (e2e), free of auth for Accounts and with a mocking db t
     password: 'alotestefunc',
     cnpj: null,
     isActive: true,
+    id: 1,
   };
 
   it('/POST accounts with valid stuff', () => {
@@ -40,13 +42,29 @@ describe('AppController (e2e), free of auth for Accounts and with a mocking db t
       .expect(validReturnOfDatabase);
   });
   it('/POST accounts with valid stuff', () => {
+    const data = { ...validReturnOfDatabase, password: '' };
     return request(app.getHttpServer())
       .get('/accounts')
       .expect(200)
-      .expect(validReturnOfDatabase);
+      .expect(data);
   });
 
   afterAll(async () => {
+    const connection = await createConnection({
+      name: 'default',
+      type: 'postgres',
+      host: '127.0.0.1', // Use the name of the service from docker-compose.yml
+      port: 5433, // default port for postgres
+      username: 'postgres',
+      password: '102030', // password defined in docker-compose.yml
+      synchronize: true,
+    });
+    const account = 'account';
+    const transaction = 'transaction';
+    const dropTableQuery = `DROP TABLE IF EXISTS "${account}"; DROP TABLE IF EXISTS "${transaction}"`;
+
+    await connection.query(dropTableQuery);
+    connection.close();
     await app.close();
   });
 });
