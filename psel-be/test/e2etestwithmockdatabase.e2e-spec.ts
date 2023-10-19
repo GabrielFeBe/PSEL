@@ -16,6 +16,9 @@ describe('AppController (e2e), free of auth for Accounts and with a mocking db t
     await app.init();
   });
 
+  const emailBodyUpdate = {
+    email: 'hu4master.zord@hotmail.com',
+  };
   const validReturnOfDatabase = {
     name: 'Gabriel',
     lastName: 'Fernandes',
@@ -41,8 +44,68 @@ describe('AppController (e2e), free of auth for Accounts and with a mocking db t
       .expect(201)
       .expect(validReturnOfDatabase);
   });
-  it('/POST accounts with valid stuff', () => {
+
+  it('/GET accounts with valid stuff', () => {
     const data = { ...validReturnOfDatabase, password: '' };
+    return request(app.getHttpServer())
+      .get('/accounts')
+      .expect(200)
+      .expect(data);
+  });
+
+  it('/PATCH accounts', () => {
+    const responseReturn = {
+      ...validReturnOfDatabase,
+      email: emailBodyUpdate.email,
+    };
+    return request(app.getHttpServer())
+      .patch('/accounts')
+      .send(emailBodyUpdate)
+      .expect(200)
+      .expect(responseReturn);
+  });
+
+  it('/GET accounts with valid stuff', () => {
+    const data = {
+      ...validReturnOfDatabase,
+      password: '',
+      email: emailBodyUpdate.email,
+    };
+    return request(app.getHttpServer())
+      .get('/accounts')
+      .expect(200)
+      .expect(data);
+  });
+
+  it('/PATCH accounts', () => {
+    const invalidCpfBody = {
+      cpf: 'invalid',
+    };
+    return request(app.getHttpServer())
+      .patch('/accounts')
+      .send(invalidCpfBody)
+      .expect(400)
+      .expect({
+        message: 'CPF or CNPJ cannot be updated',
+        error: 'Bad Request',
+        statusCode: 400,
+      });
+  });
+
+  it('/DELETE accounts', () => {
+    return request(app.getHttpServer())
+      .delete('/accounts')
+      .expect(200)
+      .expect('Account deleted');
+  });
+
+  it('/GET accounts after deleting, so it must be inactive', () => {
+    const data = {
+      ...validReturnOfDatabase,
+      password: '',
+      email: emailBodyUpdate.email,
+      isActive: false,
+    };
     return request(app.getHttpServer())
       .get('/accounts')
       .expect(200)
@@ -53,10 +116,10 @@ describe('AppController (e2e), free of auth for Accounts and with a mocking db t
     const connection = await createConnection({
       name: 'default',
       type: 'postgres',
-      host: '127.0.0.1', // Use the name of the service from docker-compose.yml
-      port: 5433, // default port for postgres
+      host: '127.0.0.1',
+      port: 5433,
       username: 'postgres',
-      password: '102030', // password defined in docker-compose.yml
+      password: '102030',
       synchronize: true,
     });
     const account = 'account';

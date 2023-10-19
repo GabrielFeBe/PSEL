@@ -47,7 +47,6 @@ export class AccountsService {
   // And the AccountDto validates the data;
   async create(account: AccountDto): Promise<Account> {
     // here we validate if we at least have a cpf or cnpj;
-    console.log(account);
     if (!account.cpf && !account.cnpj)
       throw new BadRequestException('CPF or CNPJ is required');
     // then if we do, we create the account;
