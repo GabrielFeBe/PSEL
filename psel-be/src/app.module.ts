@@ -12,7 +12,7 @@ import { APP_GUARD } from '@nestjs/core';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: '127.0.0.1', // Use the name of the service from docker-compose.yml
+      host: 'host', // Use the name of the service from docker-compose.yml
       port: 5432, // default port for postgres
       username: 'postgres',
       password: '102030', // password defined in docker-compose.yml

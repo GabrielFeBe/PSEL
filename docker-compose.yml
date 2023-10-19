@@ -13,15 +13,23 @@ services:
       - JWT_SECRET=jwt_secret
       - DB_USER=postgres
       - DB_PASS=102030
-      - DB_HOST=dbP
+      - DB_HOST=host
       - DB_PORT=5432
     command: ["npm", "start"]
-
   db:
     image: postgres:13
-    container_name: dbP
+    container_name: host
     ports:
       - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=102030
     restart: 'always'
+
+  db-test:
+    image: postgres:13
+    container_name: hostTest
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_PASSWORD=102030
+    restart: always

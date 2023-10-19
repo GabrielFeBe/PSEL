@@ -13,7 +13,7 @@ import { AuthGuard } from './authtest.guard';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: '127.0.0.1', // Use the name of the service from docker-compose.yml
-      port: 5432, // default port for postgres
+      port: 5433, // default port for postgres
       username: 'postgres',
       password: '102030', // password defined in docker-compose.yml
       entities: [Account, Transaction],
