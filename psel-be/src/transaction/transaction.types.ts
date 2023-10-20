@@ -1,7 +1,7 @@
 export interface ITransaction {
   transactionId: number;
   accountId: number;
-  date?: Date;
+  date: Date;
   value: number;
   cashback?: number;
   account: any;

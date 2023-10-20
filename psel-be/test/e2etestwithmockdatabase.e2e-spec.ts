@@ -30,6 +30,11 @@ describe('AppController (e2e), free of auth for Accounts and with a mocking db t
     id: 1,
   };
 
+  const validTransactionBody = {
+    accountId: 1,
+    value: 100,
+  };
+
   it('/POST accounts with valid stuff', () => {
     const validBody = {
       name: 'Gabriel',
@@ -91,6 +96,25 @@ describe('AppController (e2e), free of auth for Accounts and with a mocking db t
         statusCode: 400,
       });
   });
+  it('/POST transactions with valid body', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/transactions')
+      .send(validTransactionBody)
+      .expect(201);
+
+    const responseBody = JSON.parse(response.text);
+
+    responseBody.date = new Date(responseBody.date).toISOString().slice(0, 10);
+
+    const expectedResponse = {
+      ...validTransactionBody,
+      transactionId: 1,
+      cashback: '0.02',
+      date: responseBody.date,
+    };
+
+    expect(responseBody).toEqual(expectedResponse);
+  });
 
   it('/DELETE accounts', () => {
     return request(app.getHttpServer())
@@ -110,6 +134,17 @@ describe('AppController (e2e), free of auth for Accounts and with a mocking db t
       .get('/accounts')
       .expect(200)
       .expect(data);
+  });
+  it('/POST Transactions with a deleted account', () => {
+    return request(app.getHttpServer())
+      .post('/transactions')
+      .send(validTransactionBody)
+      .expect(400)
+      .expect({
+        message: 'Account has been deleted',
+        error: 'Bad Request',
+        statusCode: 400,
+      });
   });
 
   afterAll(async () => {

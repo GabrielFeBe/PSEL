@@ -35,7 +35,7 @@ async function loginForm(event: Event): Promise<void> {
 </script>
 <template>
   <main>
-    <h1>Login</h1>
+    <h1 v-if="!getToken()">Login</h1>
     <form v-if="!getToken()" @submit="loginForm">
       <label for="email">
         <span> Email </span>

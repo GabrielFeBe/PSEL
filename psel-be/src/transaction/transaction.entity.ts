@@ -9,15 +9,18 @@ export class Transaction {
   @Column()
   accountId: number;
 
-  @Column({ default: new Date() })
-  date?: Date;
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  date: Date;
 
   @Column({ type: 'decimal', precision: 5, scale: 2 })
   value: number;
 
   @Column({
     nullable: true,
-    default: 0.0,
+    default: 0.02,
     type: 'decimal',
     precision: 5,
     scale: 2,
