@@ -116,6 +116,63 @@ describe('AppController (e2e), free of auth for Accounts and with a mocking db t
     expect(responseBody).toEqual(expectedResponse);
   });
 
+  it('/GET Transaction', async () => {
+    const response = await request(app.getHttpServer())
+      .get('/transactions')
+      .expect(200);
+    const responseBody = JSON.parse(response.text);
+    expect(responseBody).toEqual([
+      {
+        ...validTransactionBody,
+        cashback: '0.02',
+        date: responseBody[0].date,
+        transactionId: 1,
+        value: '100.00',
+      },
+    ]);
+  });
+  it('/PATCH transactions', () => {
+    return request(app.getHttpServer())
+      .patch('/transactions/1')
+      .send({ cashback: 0.1 })
+      .expect(200)
+      .expect('Cahsback added sucessfully');
+  });
+
+  it('/GET Transaction after update', async () => {
+    const response = await request(app.getHttpServer())
+      .get('/transactions')
+      .expect(200);
+    const responseBody = JSON.parse(response.text);
+    expect(responseBody[0].cashback).toEqual('0.10');
+  });
+
+  it('/PATCH transactions with invalid body', () => {
+    return request(app.getHttpServer())
+      .patch('/transactions/1')
+      .send({})
+      .expect(400)
+      .expect({
+        message: [
+          'cashback must be a number conforming to the specified constraints',
+          'cashback must not be empty',
+        ],
+        error: 'Bad Request',
+        statusCode: 400,
+      });
+  });
+  it('/PATCH transaction that does not exist', () => {
+    return request(app.getHttpServer())
+      .patch('/transactions/2')
+      .send({ cashback: 0.1 })
+      .expect(404)
+      .expect({
+        message: 'Transaction not found',
+        error: 'Not Found',
+        statusCode: 404,
+      });
+  });
+
   it('/DELETE accounts', () => {
     return request(app.getHttpServer())
       .delete('/accounts')
@@ -135,6 +192,7 @@ describe('AppController (e2e), free of auth for Accounts and with a mocking db t
       .expect(200)
       .expect(data);
   });
+
   it('/POST Transactions with a deleted account', () => {
     return request(app.getHttpServer())
       .post('/transactions')
