@@ -9,7 +9,7 @@ const router = useRouter()
 const url = ref('http://localhost:3000/auth/login')
 const email = ref('')
 const password = ref('')
-const errorPage = ref<null | string>(null)
+const errorPage = ref<null | string[]>(null)
 
 async function loginForm(event: Event): Promise<void> {
   event.preventDefault()

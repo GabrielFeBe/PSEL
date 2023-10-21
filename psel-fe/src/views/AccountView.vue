@@ -4,6 +4,7 @@ import { useFetchDU } from '../utils/fetchDU'
 import { type UAccount } from '../types/UpdateAcc'
 import { useRouter } from 'vue-router'
 import { formsStore } from '@/stores/Form'
+import { validateFormAccount } from '@/utils/ValidateForm'
 import Cookies from 'js-cookie'
 const router = useRouter()
 const deleteConfirmation = ref(false)
@@ -76,17 +77,26 @@ onBeforeUnmount(() => {
       </label>
       <EmailPassword :object-form="data" />
       <div class="buttonBox">
-        <button @click="updatingAccount">Change</button>
+        <button @click="updatingAccount" :disabled="!validateFormAccount(formsStore)">
+          Change
+        </button>
         <button class="warning" @click="deleteConfirmation = true">Delete</button>
+      </div>
+      <div class="error" v-if="updateError">
+        {{ updateError }}
       </div>
     </div>
     <div v-else>Loading...</div>
-
-    <div v-if="updateError">{{ updateError }}</div>
   </main>
 </template>
 <style scoped>
+.error {
+  color: red;
+  position: absolute;
+  bottom: 0;
+}
 .boxAccount {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;

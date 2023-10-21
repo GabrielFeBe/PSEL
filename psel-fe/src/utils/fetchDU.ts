@@ -4,7 +4,7 @@ import { ref, toValue,type Ref } from 'vue';
 
 export async function useFetchDU(url: Ref<string>, method: method = 'GET', body?: any , token?: string,) {
   const data = ref<Account | null>(null);
-  const error = ref<string | null>(null);
+  const error = ref<string[] | null>(null);
 
   await new Promise<void>((resolve) => {
     data.value = null;
@@ -27,14 +27,17 @@ export async function useFetchDU(url: Ref<string>, method: method = 'GET', body?
     fetch(urlValue, requestOptions)
       .then(async (res) => {
         if (!res.ok) {
-          throw new Error(res.statusText);
+          const textError = await res.text();
+          const jsonError = JSON.parse(textError);
+          console.log(jsonError)
+          throw new Error(jsonError.message);
         }
         const valor: Account = await res.json();
         data.value = valor;
         resolve();
       })
       .catch((e) => {
-        console.log(e)
+        console.log(e.message)
         error.value = e.message;
         resolve();
       });

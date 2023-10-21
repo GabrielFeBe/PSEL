@@ -5,7 +5,7 @@ import { useFetchDU } from '@/utils/fetchDU'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
-const error = ref<string | null>(null)
+const error = ref<string[] | null>(null)
 const url = ref('http://localhost:3000/accounts')
 
 async function submitForm(event: Event): Promise<void> {
