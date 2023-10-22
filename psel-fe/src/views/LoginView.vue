@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ErrorMessage, Field, Form, type SubmissionHandler } from 'vee-validate'
+import * as yup from 'yup'
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useRouter } from 'vue-router'
@@ -11,17 +13,21 @@ const email = ref('')
 const password = ref('')
 const errorPage = ref<null | string[]>(null)
 import { loginCases } from '@/utils/LoginCases'
-async function loginForm(event: Event): Promise<void> {
-  event.preventDefault()
 
-  const form = event.target as HTMLFormElement
-  const formData = new FormData(form)
+const emailRules = yup.string().email('Email Must be valid').required('Email is required')
+const passwordRules = yup.string().required('Password is required').min(8)
 
-  const email = formData.get('email') as string
-  const password = formData.get('password') as string
+interface GenericFormValues {
+  [key: string]: string
+  email: string
+  password: string
+}
 
+const submitForm: SubmissionHandler<GenericFormValues, Promise<void>> = async (value) => {
+  const { email, password } = value
   console.log('Email:', email)
   console.log('Password:', password)
+
   const body = { email, password }
   const { error, data } = await useFetchDU(url, 'POST', body, getToken() as string)
   if (error.value) {
@@ -36,20 +42,28 @@ async function loginForm(event: Event): Promise<void> {
 <template>
   <main>
     <h1 v-if="!getToken()">Login</h1>
-    <form v-if="!getToken()" @submit="loginForm">
+    <Form v-if="!getToken()" @submit="submitForm as any">
       <label for="email">
         <span> Email </span>
-        <input type="email" name="email" id="email" v-model="email" />
+        <Field type="email" name="email" id="email" v-model="email" :rules="emailRules" />
+        <ErrorMessage name="email" class="errorFields" />
       </label>
       <label for="password">
-        <span> Password </span>
-        <input type="password" name="password" id="password" v-model="password" />
+        Password
+        <Field
+          type="password"
+          name="password"
+          id="password"
+          v-model="password"
+          :rules="passwordRules"
+        />
+        <ErrorMessage name="password" class="errorFields" />
       </label>
       <span class="error" v-if="errorPage">{{ loginCases(errorPage as any) }}</span>
       <button type="submit">Entrar</button>
 
       <RouterLink to="/register">Register here</RouterLink>
-    </form>
+    </Form>
     <section class="centralizedWelcome" v-else>Welcome to PSel Your best Payment Solution</section>
   </main>
 </template>
@@ -69,11 +83,18 @@ h1 {
 }
 
 label {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 1rem;
   text-align: left;
+}
+
+.errorFields {
+  color: red;
+  position: absolute;
+  bottom: -15px;
 }
 
 form {
