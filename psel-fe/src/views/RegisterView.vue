@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Form, type SubmissionHandler } from 'vee-validate'
 import SelectCpfOrCnpj from '@/components/ SelectCpfOrCnpj.vue'
 import EmailPassword from '@/components/EmailPassword.vue'
 import { useFetchDU } from '@/utils/fetchDU'
@@ -7,29 +8,29 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const error = ref<string[] | null>(null)
 const url = ref('http://localhost:3000/accounts')
+interface GenericFormValues {
+  [key: string]: string
+  email: string
+  password: string
+  confirmPassword: string
+  cpf: string
+  cnpj: string
+  name: string
+  lastName: string
+}
 
-async function submitForm(event: Event): Promise<void> {
-  event.preventDefault()
-
-  const form = event.target as HTMLFormElement
-  const formData = new FormData(form)
-
-  const email = formData.get('email') as string
-  const password = formData.get('password') as string
-  const confirmPassword = formData.get('confirmPassword') as string
-  // cnpj or cpf one of them will be null always
-  const cpf = formData.get('cpf') as string
-  const cnpj = formData.get('cnpj') as string
-  const name = formData.get('name') as string
-  const lastName = formData.get('lastName') as string
+const submitForm: SubmissionHandler<GenericFormValues, Promise<void>> = async (data) => {
+  const { email, password, confirmPassword, cpf, cnpj, name, lastName } = data
 
   console.log('Email:', email)
   console.log('Password:', password)
   console.log('Confirm Password:', confirmPassword)
   console.log('CPF:', cpf)
   console.log('CNPJ:', cnpj)
+
   const body = { email, password, cpf, cnpj, name, lastName }
   const { error: errorR } = await useFetchDU(url, 'POST', body)
+
   if (errorR.value) {
     error.value = errorR.value
   } else {
@@ -41,10 +42,10 @@ async function submitForm(event: Event): Promise<void> {
 <template>
   <main>
     <h1>Register</h1>
-    <form @submit="submitForm">
+    <Form @submit="submitForm as SubmissionHandler<GenericFormValues, Promise<void>>">
       <EmailPassword />
       <SelectCpfOrCnpj />
-    </form>
+    </Form>
     <p v-if="error">{{ error }}</p>
   </main>
 </template>

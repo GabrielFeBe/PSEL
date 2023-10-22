@@ -2,6 +2,8 @@
 import { ValidateCPF } from '../utils/CpfValidator'
 import { ref } from 'vue'
 import { formsStore } from '../stores/Form'
+import { ErrorMessage, Field } from 'vee-validate'
+import * as yup from 'yup'
 const isCPFValid = ref(true)
 
 const validateInput = () => {
@@ -17,14 +19,41 @@ const updateCpf = (event: Event) => {
     validationTimeout = setTimeout(validateInput, 1000)
   }
 }
+
+const cpfRules = yup
+  .string()
+  .required()
+  .min(11)
+  .test('cpf', 'CPF inválido', function (value) {
+    return ValidateCPF(value as string)
+  })
 </script>
 
 <template>
   <label for="cpf">
-    Cpf<br />
-    <input type="text" id="cpf" name="cpf" :value="formsStore.cpf" @input="updateCpf($event)" />
-    <span v-if="formsStore.cpf.length > 0 && !isCPFValid">CPF inválido</span>
+    Cpf
+    <Field
+      type="text"
+      id="cpf"
+      name="cpf"
+      :value="formsStore.cpf"
+      @input="updateCpf($event)"
+      :rules="cpfRules"
+    />
+    <ErrorMessage name="cpf" class="error" />
   </label>
 </template>
 
-<style scoped></style>
+<style scoped>
+label {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  position: absolute;
+  color: red;
+  bottom: -8px;
+}
+</style>

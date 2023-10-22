@@ -37,7 +37,6 @@ const updatingAccount = async () => {
     clearInterval(timeoutId)
     window.location.reload()
   } else {
-    console.log(error.value)
     clearInterval(timeoutId)
     updateError.value = error.value
     timeoutId = setTimeout(() => {

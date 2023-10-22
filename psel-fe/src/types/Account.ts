@@ -7,4 +7,5 @@
   password: string
   name: string,
   lastName: string,
+  confirmPassword: string,
 }
