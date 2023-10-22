@@ -28,8 +28,8 @@ export async function useFetchDU(url: Ref<string>, method: method = 'GET', body?
       .then(async (res) => {
         if (!res.ok) {
           const textError = await res.text();
+          console.log(textError)
           const jsonError = JSON.parse(textError);
-          console.log(jsonError)
           throw new Error(jsonError.message);
         }
         const valor: Account = await res.json();

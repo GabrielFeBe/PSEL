@@ -10,7 +10,7 @@ const url = ref('http://localhost:3000/auth/login')
 const email = ref('')
 const password = ref('')
 const errorPage = ref<null | string[]>(null)
-
+import { loginCases } from '@/utils/LoginCases'
 async function loginForm(event: Event): Promise<void> {
   event.preventDefault()
 
@@ -45,7 +45,7 @@ async function loginForm(event: Event): Promise<void> {
         <span> Password </span>
         <input type="password" name="password" id="password" v-model="password" />
       </label>
-      <span class="error" v-if="errorPage">{{ errorPage }}</span>
+      <span class="error" v-if="errorPage">{{ loginCases(errorPage as any) }}</span>
       <button type="submit">Entrar</button>
 
       <RouterLink to="/register">Register here</RouterLink>
