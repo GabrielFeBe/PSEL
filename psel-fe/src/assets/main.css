@@ -43,3 +43,29 @@ button:hover {
   background-color: hsla(160, 100%, 37%, 0.8);
   color: white;
 }
+
+.tremor {
+  border: 1px solid red;
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-5px);
+  }
+  40% {
+    transform: translateX(5px);
+  }
+  60% {
+    transform: translateX(-5px);
+  }
+  80% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

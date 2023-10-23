@@ -5,7 +5,6 @@ import * as yup from 'yup'
 import { Field, ErrorMessage } from 'vee-validate'
 const passwordRules = yup.string().required().min(8)
 const emailRules = yup.string().email('Email Must be valid').required('Email is required')
-
 const passwordConfirmationRules = yup
   .string()
   .required()
@@ -23,21 +22,6 @@ if (props.objectForm) {
   formsStore.name = props.objectForm.name as string
   formsStore.lastName = props.objectForm.lastName as string
 }
-const updateEmail = (event: Event) => {
-  if (event.target) {
-    formsStore.email = (event.target as HTMLInputElement).value
-  }
-}
-const updatePassword = (event: Event) => {
-  if (event.target) {
-    formsStore.password = (event.target as HTMLInputElement).value
-  }
-}
-const updateConfirmationPassword = (event: Event) => {
-  if (event.target) {
-    formsStore.confirmPassword = (event.target as HTMLInputElement).value
-  }
-}
 </script>
 
 <template>
@@ -48,50 +32,64 @@ const updateConfirmationPassword = (event: Event) => {
         type="email"
         name="email"
         id="email"
-        :value="formsStore.email"
-        @input="updateEmail($event)"
+        v-model="formsStore.email"
         :rules="emailRules"
-      />
+        v-slot="{ field, errors }"
+      >
+        <input type="email" v-bind="field" :class="{ tremor: errors[0] }" />
+      </Field>
       <ErrorMessage name="email" class="error" />
     </label>
     <label for="password">
       Password
       <Field
-        type="password"
         id="password"
         name="password"
-        :value="formsStore.password"
-        @input="updatePassword($event)"
+        v-model="formsStore.password"
         :rules="passwordRules"
-      />
+        v-slot="{ field, errors }"
+      >
+        <input type="password" v-bind="field" :class="{ tremor: errors[0] }" />
+      </Field>
       <ErrorMessage name="password" class="error" />
     </label>
     <label for="confirmPassword">
       Confirm Password
       <Field
-        type="password"
         id="confirmPassword"
         name="confirmPassword"
-        :value="formsStore.confirmPassword"
-        @input="updateConfirmationPassword($event)"
+        v-model="formsStore.confirmPassword"
         :rules="passwordConfirmationRules"
-      />
+        v-slot="{ field, errors }"
+      >
+        <input type="password" v-bind="field" :class="{ tremor: errors[0] }" />
+      </Field>
       <ErrorMessage name="confirmPassword" class="error" />
     </label>
     <label for="name">
       Name
-      <Field :rules="nameRules" type="text" name="name" id="name" v-model="formsStore.name" />
+      <Field
+        :rules="nameRules"
+        name="name"
+        id="name"
+        v-model="formsStore.name"
+        v-slot="{ field, errors }"
+      >
+        <input type="text" v-bind="field" :class="{ tremor: errors[0] }" />
+      </Field>
       <ErrorMessage name="name" class="error" />
     </label>
     <label for="lastName">
       Last Name
       <Field
         :rules="lastNameRules"
-        type="text"
         name="lastName"
         id="lastName"
         v-model="formsStore.lastName"
-      />
+        v-slot="{ field, errors }"
+      >
+        <input type="text" v-bind="field" :class="{ tremor: errors[0] }" />
+      </Field>
       <ErrorMessage name="lastName" class="error" />
     </label>
   </div>

@@ -81,7 +81,7 @@ onBeforeUnmount(() => {
         </button>
         <button class="warning" @click="deleteConfirmation = true">Delete</button>
       </div>
-      <div class="error" v-if="updateError">
+      <div class="errorU" v-if="updateError">
         {{ updateError }}
       </div>
     </div>
@@ -89,7 +89,7 @@ onBeforeUnmount(() => {
   </main>
 </template>
 <style scoped>
-.error {
+.errorU {
   color: red;
   position: absolute;
   bottom: 0;

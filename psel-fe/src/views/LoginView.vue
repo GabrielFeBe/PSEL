@@ -7,12 +7,12 @@ import { useRouter } from 'vue-router'
 import Cookies from 'js-cookie'
 import { getToken } from '@/utils/GetCookies'
 import { useFetchDU } from '@/utils/fetchDU'
+import { loginCases } from '@/utils/LoginCases'
 const router = useRouter()
 const url = ref('http://localhost:3000/auth/login')
 const email = ref('')
 const password = ref('')
 const errorPage = ref<null | string[]>(null)
-import { loginCases } from '@/utils/LoginCases'
 
 const emailRules = yup.string().email('Email Must be valid').required('Email is required')
 const passwordRules = yup.string().required('Password is required').min(8)
@@ -25,8 +25,6 @@ interface GenericFormValues {
 
 const submitForm: SubmissionHandler<GenericFormValues, Promise<void>> = async (value) => {
   const { email, password } = value
-  console.log('Email:', email)
-  console.log('Password:', password)
 
   const body = { email, password }
   const { error, data } = await useFetchDU(url, 'POST', body, getToken() as string)
@@ -45,18 +43,28 @@ const submitForm: SubmissionHandler<GenericFormValues, Promise<void>> = async (v
     <Form v-if="!getToken()" @submit="submitForm as any">
       <label for="email">
         <span> Email </span>
-        <Field type="email" name="email" id="email" v-model="email" :rules="emailRules" />
+        <Field
+          name="email"
+          id="email"
+          v-model="email"
+          :rules="emailRules"
+          v-slot="{ field, errors }"
+        >
+          <input type="email" :class="{ tremor: errors[0] }" v-bind="field" />
+        </Field>
         <ErrorMessage name="email" class="errorFields" />
       </label>
       <label for="password">
         Password
         <Field
-          type="password"
           name="password"
           id="password"
           v-model="password"
           :rules="passwordRules"
-        />
+          v-slot="{ field, errors }"
+        >
+          <input type="password" :class="{ tremor: errors[0] }" v-bind="field" />
+        </Field>
         <ErrorMessage name="password" class="errorFields" />
       </label>
       <span class="error" v-if="errorPage">{{ loginCases(errorPage as any) }}</span>

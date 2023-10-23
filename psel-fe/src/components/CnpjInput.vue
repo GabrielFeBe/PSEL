@@ -33,13 +33,15 @@ const updateCpf = (event: Event) => {
   <label for="cnpj">
     Cnpj<br />
     <Field
-      type="text"
       id="cnpj"
       name="cnpj"
       :value="formsStore.cnpj"
       @input="updateCpf($event)"
       :rules="cnpjRules"
-    />
+      v-slot="{ field, errors }"
+    >
+      <input type="text" v-bind="field" :class="{ tremor: errors[0] }" />
+    </Field>
     <ErrorMessage name="cnpj" class="error" />
   </label>
 </template>

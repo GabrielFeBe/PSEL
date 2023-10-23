@@ -39,7 +39,10 @@ const cpfRules = yup
       :value="formsStore.cpf"
       @input="updateCpf($event)"
       :rules="cpfRules"
-    />
+      v-slot="{ field, errors }"
+    >
+      <input type="text" v-bind="field" :class="{ tremor: errors[0] }" />
+    </Field>
     <ErrorMessage name="cpf" class="error" />
   </label>
 </template>
