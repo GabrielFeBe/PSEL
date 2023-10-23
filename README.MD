@@ -79,5 +79,5 @@ npm run test:e2e
 
 ### Configurações de teste
 
-- Os testes são executados em um servidor criado no docker compose, logo caso queira rodar o testes no container tera que mudar a conexão que existe no arquivo /test/test.module.ts
+- Os testes são executados em um servidor criado no docker compose, logo caso queira rodar o testes no container tera que mudar a conexão que existe no arquivo `/test/test.module.ts`
 - Caso queira usar outro servidor para testes, basta mudar a conexão no arquivo /test/test.module.ts
