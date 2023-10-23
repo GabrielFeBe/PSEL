@@ -49,6 +49,13 @@ export class AccountsService {
     // here we validate if we at least have a cpf or cnpj;
     if (!account.cpf && !account.cnpj)
       throw new BadRequestException('CPF or CNPJ is required');
+    // check if the email already exists;
+    const accountExists = await this.AccountsRepository.findOneBy({
+      email: account.email,
+    });
+    if (accountExists) {
+      throw new BadRequestException('Email already exists');
+    }
     // then if we do, we create the account;
     return await this.AccountsRepository.save(account);
   }
