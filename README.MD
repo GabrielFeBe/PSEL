@@ -21,22 +21,20 @@ Siga as etapas abaixo para iniciar o projeto.
 2. Navegue até o Diretório Raiz
 
    - Navegue até o diretório raiz do projeto:
-     cd PSEL
+
+```bash
+  cd PSel
+```
 
 3. Inicie os Contêineres
 
 - Execute o seguinte comando para iniciar os contêineres para o backend e o frontend:
 
-- docker-compose up --build
+```bash
+ docker-compose up --build
+```
 
-- Isso construirá as imagens Docker e iniciará os contêineres para o backend e o frontend.
-
-4. Acesse a Aplicação
-
-   - Após a conclusão bem-sucedida, você pode acessar a aplicação Vue.js no seu navegador em:
-     http://localhost:8080
-
-5. Iniciando o Container do Frontend Manualmente (Obrigatorio)
+4. Iniciando o Container do Frontend Manualmente (Obrigatorio)
 
 - Navegue até o diretório do frontend:
   cd psel-fe
@@ -54,6 +52,13 @@ docker run -it -p 8080:8080 --rm --name dockerize-vuejs-app-1 vuejs-cookbook/doc
 ```
 
 - Isso iniciará o container do frontend Vue.js.
+
+5. Acesse a Aplicação
+
+- Isso construirá as imagens Docker e iniciará os contêineres para o backend e o frontend.
+
+- Após a conclusão bem-sucedida, você pode acessar a aplicação Vue.js no seu navegador em:
+  http://localhost:8080
 
 6. Licença
    Este projeto está licenciado sob a licença MIT - consulte o arquivo <a href=''>LICENSE<a> para obter detalhes.
