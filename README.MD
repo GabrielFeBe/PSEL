@@ -62,3 +62,22 @@ docker run -it -p 8080:8080 --rm --name dockerize-vuejs-app-1 vuejs-cookbook/doc
 
 6. Licença
    Este projeto está licenciado sob a licença MIT - consulte o arquivo <a href=''>LICENSE<a> para obter detalhes.
+
+## Testes
+
+### Antes de executar os testes
+
+```bash
+cd psel-be
+```
+
+### Execute os teste com comando
+
+```bash
+npm run test:e2e
+```
+
+### Configurações de teste
+
+- Os testes são executados em um servidor criado no docker compose, logo caso queira rodar o testes no container tera que mudar a conexão que existe no arquivo /test/test.module.ts
+- Caso queira usar outro servidor para testes, basta mudar a conexão no arquivo /test/test.module.ts
