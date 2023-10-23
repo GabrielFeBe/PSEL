@@ -42,15 +42,29 @@ const submitForm: SubmissionHandler<GenericFormValues, Promise<void>> = async (d
 <template>
   <main>
     <h1>Register</h1>
-    <Form @submit="submitForm as SubmissionHandler<GenericFormValues, Promise<void>>">
+    <Form
+      class="relative"
+      @submit="submitForm as SubmissionHandler<GenericFormValues, Promise<void>>"
+    >
       <EmailPassword />
       <SelectCpfOrCnpj />
+      <p v-if="error" class="errorFetch">{{ error }}</p>
     </Form>
-    <p v-if="error">{{ error }}</p>
   </main>
 </template>
 
 <style scoped>
+.errorFetch {
+  color: red;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -30px;
+}
+.relative {
+  position: relative;
+}
 h1 {
   padding-bottom: 100px;
 }
