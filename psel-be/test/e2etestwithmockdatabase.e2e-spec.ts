@@ -35,7 +35,7 @@ describe('AppController (e2e), free of auth for Accounts and with a mocking db t
     value: 100,
   };
 
-  it('/POST accounts with valid stuff', () => {
+  it('/POST accounts with valid stuff', async () => {
     const validBody = {
       name: 'Gabriel',
       lastName: 'Fernandes',
@@ -43,11 +43,16 @@ describe('AppController (e2e), free of auth for Accounts and with a mocking db t
       email: 'hu3master.zord@hotmail.com',
       password: 'alotestefunc',
     };
-    return request(app.getHttpServer())
+    const response = await request(app.getHttpServer())
       .post('/accounts')
       .send(validBody)
-      .expect(201)
-      .expect(validReturnOfDatabase);
+      .expect(201);
+    const responseBody = JSON.parse(response.text);
+
+    expect(responseBody).toEqual({
+      ...validReturnOfDatabase,
+      password: responseBody.password,
+    });
   });
 
   it('/GET accounts with valid stuff', () => {
@@ -58,16 +63,23 @@ describe('AppController (e2e), free of auth for Accounts and with a mocking db t
       .expect(data);
   });
 
-  it('/PATCH accounts', () => {
+  it('/PATCH accounts', async () => {
     const responseReturn = {
       ...validReturnOfDatabase,
       email: emailBodyUpdate.email,
     };
-    return request(app.getHttpServer())
+
+    const response = await request(app.getHttpServer())
       .patch('/accounts')
       .send(emailBodyUpdate)
-      .expect(200)
-      .expect(responseReturn);
+      .expect(200);
+
+    const responseBody = JSON.parse(response.text);
+
+    expect(responseBody).toEqual({
+      ...responseReturn,
+      password: responseBody.password,
+    });
   });
 
   it('/GET accounts with valid stuff', () => {

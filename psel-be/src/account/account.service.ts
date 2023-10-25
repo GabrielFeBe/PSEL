@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Account } from './account.entity';
 import { AccountDto } from './account.validator';
 import { AccountUpdateDto } from './update.validator';
-import { encrypt } from 'src/utils/encrypter';
+import { encrypt } from '../utils/encrypter';
 
 @Injectable()
 export class AccountsService {
