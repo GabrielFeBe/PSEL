@@ -1,5 +1,5 @@
 # Use a imagem oficial do Node.js como base
-FROM node:16.14-alpine
+FROM node:16.18-alpine
 
 # Cria o diretório de trabalho e define-o como o diretório padrão
 WORKDIR /psel-backend
@@ -16,5 +16,7 @@ COPY . .
 # Expõe a porta que a aplicação Nest.js irá utilizar (por padrão, 3000)
 EXPOSE 3000
 
-# Comando para iniciar a aplicação
-CMD ["npm", "start"]
+
+ENTRYPOINT ["npm", "run"]
+
+CMD ["start"]
