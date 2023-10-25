@@ -1,13 +1,14 @@
 version: '3.9'
 services:
   psel-be:
-    image: node:16.14-alpine
     container_name: psel-be
-    working_dir: /psel-backend
-    volumes:
-      - ./psel-be:/psel-backend
+    build: ./psel-be
     ports:
       - "3000:3000"
+    working_dir: /psel-backend
+    volumes:
+      - ./psel-be/src:/psel-backend/src
+    
     environment:
       - APP_PORT=3000 # Porta da aplicação Nest.js
       - JWT_SECRET=jwt_secret
@@ -15,7 +16,6 @@ services:
       - DB_PASS=102030
       - DB_HOST=host
       - DB_PORT=5432
-    command: ["npm", "start"]
   db:
     image: postgres:13
     container_name: host
