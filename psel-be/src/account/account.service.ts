@@ -57,7 +57,7 @@ export class AccountsService {
       throw new BadRequestException('Email already exists');
     }
     // then if we do, we create the account;
-    return await this.AccountsRepository.save(account);
+    return this.AccountsRepository.save(account);
   }
   async update(id: number, account: AccountUpdateDto): Promise<Account> {
     // check if there is a cpf or cnpj in the request body;
@@ -67,6 +67,6 @@ export class AccountsService {
 
     // then if it does not, we update the account;
     await this.AccountsRepository.update({ id }, account);
-    return await this.AccountsRepository.findOneBy({ id });
+    return this.AccountsRepository.findOneBy({ id });
   }
 }
