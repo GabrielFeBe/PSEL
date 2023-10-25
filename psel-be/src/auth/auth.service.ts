@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AccountsService } from '../account/account.service';
+import { compare } from 'src/utils/encrypter';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +12,8 @@ export class AuthService {
   // Auth service using JWT to sign the token;
   async signIn(username: string, pass: string): Promise<any> {
     const user = await this.usersService.findOneByUsername(username);
-    if (user?.password !== pass) {
+    const isMatch = await compare(pass, user.password);
+    if (!isMatch) {
       throw new UnauthorizedException();
     }
 

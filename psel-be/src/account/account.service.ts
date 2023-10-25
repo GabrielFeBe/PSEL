@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Account } from './account.entity';
 import { AccountDto } from './account.validator';
 import { AccountUpdateDto } from './update.validator';
+import { encrypt } from 'src/utils/encrypter';
 
 @Injectable()
 export class AccountsService {
@@ -46,6 +47,8 @@ export class AccountsService {
   }
   // And the AccountDto validates the data;
   async create(account: AccountDto): Promise<Account> {
+    const password = await encrypt(account.password);
+    console.log(password);
     // here we validate if we at least have a cpf or cnpj;
     if (!account.cpf && !account.cnpj)
       throw new BadRequestException('CPF or CNPJ is required');
@@ -57,14 +60,17 @@ export class AccountsService {
       throw new BadRequestException('Email already exists');
     }
     // then if we do, we create the account;
-    return this.AccountsRepository.save(account);
+    return this.AccountsRepository.save({ ...account, password });
   }
   async update(id: number, account: AccountUpdateDto): Promise<Account> {
     // check if there is a cpf or cnpj in the request body;
     if (account.cpf || account.cnpj)
       throw new BadRequestException('CPF or CNPJ cannot be updated');
     // if it exists, we throw an error;
-
+    if (account.password) {
+      const password = await encrypt(account.password);
+      account.password = password;
+    }
     // then if it does not, we update the account;
     await this.AccountsRepository.update({ id }, account);
     return this.AccountsRepository.findOneBy({ id });
