@@ -81,3 +81,11 @@ npm run test:e2e
 
 - Os testes são executados em um servidor criado no docker compose, logo caso queira rodar o testes no container tera que mudar a conexão que existe no arquivo `/test/test.module.ts`
 - Caso queira usar outro servidor para testes, basta mudar a conexão no arquivo /test/test.module.ts
+
+## Documentação Usando Swagger
+
+- A documentação da API pode ser acessada em http://localhost:3000/api
+- Para acessar a documentação da API, é necessário que o servidor esteja rodando, junto com o banco de dados.
+- Para acessar as rotas que necessitam de autenticação, é necessário que você tenha um token válido, caso você não tenha uma conta, você pode criar no POST:`/accounts`, logo após você pode fazer o login no POST:`/auth/login` e pegar o token gerado, e colocar no botão Authorize do swagger, para que você possa acessar as rotas que necessitam de autenticação.
+- Schemas de entrada e saída de dados estão disponíveis na documentação da API.
+- Algo que não fica muito visível no swagger o cpf ou cnpj, deve ser passado sem pontos e traços, apenas numeros, e apenas um dos dois cpf ou cnpj, não pode ser os dois.
