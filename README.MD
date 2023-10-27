@@ -89,3 +89,40 @@ npm run test:e2e
 - Para acessar as rotas que necessitam de autenticação, é necessário que você tenha um token válido, caso você não tenha uma conta, você pode criar no POST:`/accounts`, logo após você pode fazer o login no POST:`/auth/login` e pegar o token gerado, e colocar no botão Authorize do swagger, para que você possa acessar as rotas que necessitam de autenticação.
 - Schemas de entrada e saída de dados estão disponíveis na documentação da API.
 - Algo que não fica muito visível no swagger o cpf ou cnpj, deve ser passado sem pontos e traços, apenas numeros, e apenas um dos dois cpf ou cnpj, não pode ser os dois.
+
+# Backend
+
+## Tecnologias
+
+- **NestJS** - Framework para NodeJS
+- **TypeORM** - ORM para NodeJS
+- **PostgreSQL** - Banco de dados
+- **Docker** - Container para o banco de dados e para o servidor
+- **Swagger** - Documentação da API
+- **Jest** - Testes automatizados
+
+## Arquitetura Modular
+
+Este projeto segue uma arquitetura modular para organizar e estruturar o código de forma clara e coesa. Cada domínio ou recurso do sistema é encapsulado em seu próprio módulo, o que facilita a manutenção, escalabilidade e a compreensão do código. Cada módulo contém controladores, serviços, entidades, DTOs, repositórios e outros componentes específicos do domínio.
+
+### Estrutura de Diretórios
+
+A estrutura de diretórios do projeto segue a seguinte organização:
+
+- `src/main.ts`: Ponto de entrada da aplicação.
+- `src/app.module.ts`: Módulo raiz da aplicação.
+- Diretórios de módulos:
+  - `src/account/`: Módulo de usuários.
+  - `src/transaction/`: Módulo de transferências.
+  - `src/auth/`: Módulo de autenticação.
+
+Cada módulo pode importar outros módulos e exportar componentes conforme necessário para atender aos requisitos específicos de cada domínio. Isso ajuda a manter a clareza, a modularidade e o desacoplamento do código.
+
+### Benefícios
+
+- Facilita a manutenção e a escalabilidade do código.
+- Melhora a compreensão, isolando cada domínio em seu próprio módulo.
+- Promove a reutilização de código, pois os módulos podem ser importados em outros lugares conforme necessário.
+- Mantém a coesão e o desacoplamento entre os componentes.
+
+Esta abordagem fornece uma base sólida para o desenvolvimento de aplicativos complexos, onde diferentes domínios podem ser gerenciados de forma independente e integrados de maneira eficiente.
