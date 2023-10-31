@@ -126,3 +126,21 @@ Cada módulo pode importar outros módulos e exportar componentes conforme neces
 - Mantém a coesão e o desacoplamento entre os componentes.
 
 Esta abordagem fornece uma base sólida para o desenvolvimento de aplicativos complexos, onde diferentes domínios podem ser gerenciados de forma independente e integrados de maneira eficiente.
+
+# Frontend
+
+## Tecnologias
+
+- **Vue.js** - Framework para Frontend
+- **Docker** - Container para o servidor
+- **VeeValidate** - Validação de dados
+- **JsCookie** - Cookies para armazenar o token
+- **Dayjs** - Manipulação de datas
+
+## Arquitetura de Componentes
+
+Esse projeto usa a arquitetura de componentes se baseia na construção de interfaces de usuário por meio da composição de componentes reutilizáveis e autônomos. Cada componente encapsula sua própria lógica, estrutura e estilo, promovendo a modularidade e facilitando o desenvolvimento e manutenção de aplicações front-end.
+
+## Desafios
+
+Eu tenho dificuldade em desenvolver o frontend, pois sou horrivel com design, e foi meu primeiro contato com o vue, mas acredito que consegui fazer um bom trabalho, e que o projeto ficou bem organizado, e que atendeu os requisitos do desafio.
